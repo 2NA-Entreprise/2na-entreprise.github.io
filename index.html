@@ -394,6 +394,7 @@ function normalizeState(){
 }
 async function loadRemote(){
   try{
+    const { data, error } = await sb.from('erp_data').select('data, updated_at').eq('id','main').maybeSingle();
     if(error) return { ok:false, error: error.message || JSON.stringify(error) };
     if(!data) return { ok:false, error: "Aucune ligne trouvée (id='main') dans la table erp_data" };
     return { ok:true, payload: data.data, updatedAt: data.updated_at };
