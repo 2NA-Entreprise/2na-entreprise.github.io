@@ -218,7 +218,7 @@ let authError = '';
 function envBadgeHtml(){
   const host = window.location.hostname;
   let label, color, bg;
-  if(host === '2na-entreprise.github.io'){ label = '● VERSION PUBLIQUE — 2NA-Entreprise'; color = '#4CAF6D'; bg = 'rgba(76,175,109,.12)'; }
+  if(host === '2na-entreprise.github.io'){ label = '● VERSION PUBLIQUE — 2NA-MAINT-PROD'; color = '#4CAF6D'; bg = 'rgba(76,175,109,.12)'; }
   else if(host === 'localhost' || host === '127.0.0.1'){ label = '● LOCAL — sur cet ordinateur'; color = '#8B939A'; bg = 'rgba(139,147,154,.12)'; }
   else { label = '● VERSION TEST — '+host; color = '#F2A63C'; bg = 'rgba(242,166,60,.12)'; }
   return `<span style="display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.03em;color:${color};background:${bg};border:1px solid ${color};border-radius:20px;padding:3px 10px;white-space:nowrap;">${label}</span>`;
@@ -5273,7 +5273,15 @@ async function init(){
       locations: locs, plantEquipment: seedPlantEquipment(locs), notifications: [], measuringPoints: [],
       costCenters: seedCostCenters(), productionLogs: [], woCounter: 0, equipTypes: [...DEFAULT_EQUIP_TYPES], personnel: [], theme: { ...DEFAULT_THEME },
       purchaseRequests: [], purchaseOrders: [], daCounter: 0, bcCounter: 0, reservations: [], resaCounter: 0, postes: [...DEFAULT_POSTES], avisCounter: 0, stockMovements: [], auditLog: [],
-      typesTravail: ["Inspection","Remplacement pièces","Intervention","Révision","Autre"], woTypes: ["Panne / Correctif","Préventif","Inspection","Amélioration"], woPriorites: ["Basse","Normale","Haute","Urgente"] };
+      typesTravail: ["Inspection","Remplacement pièces","Intervention","Révision","Autre"], woTypes: ["Panne / Correctif","Préventif","Inspection","Amélioration"], woPriorites: ["Basse","Normale","Haute","Urgente"],
+      categoriesArticle: ["Mécanique","Électrique","HSE","Consommable","Autre"],
+      unitesArticle: ["Pièce (PCE)","Unité (UN)","Kilogramme (KG)","Gramme (G)","Tonne (T)","Litre (L)","Millilitre (ML)","Mètre (M)","Mètre carré (M2)","Mètre cube (M3)","Boîte (BT)","Carton (CAR)","Sachet (SAC)","Bidon (BID)","Rouleau (RLO)","Paire (PR)","Jeu / Kit (JEU)","Lot (LOT)","Bouteille (BOU)","Sac (SC)","Barre (BAR)","Autre"],
+      niveauxCriticite: ["A","B","C"], typesMouvement: ["Achat","Retour","Réparation"], locationTypes: ["Site","Atelier","Ligne","Machine"],
+      affectations: ["Flotte","Usine","Les deux"], fonctions: ["Technicien","Planificateur","Superviseur","Responsable","Administrateur"], niveauxApprobation: ["Technique","Financière","Stratégique"],
+      leaveRequests: [], typesConge: ["Congé annuel","Congé maladie","Congé sans solde","Congé maternité / paternité","Autre"],
+      trainings: [], typesFormation: ["Formation technique","Habilitation sécurité","Certification","Recyclage","Autre"],
+      candidatures: [], statutsRecrutement: ["Reçue","Présélection","Entretien","Test technique","Offre","Embauché","Refusée"],
+      maternityPlans: [] };
   } else {
     // compatibilité ascendante : ajoute le module usine si absent d'un compte existant
     if(!data.locations || data.locations.length===0){
@@ -5364,6 +5372,7 @@ async function init(){
     });
   }
   state = data;
+  normalizeState();
   applyTheme(state.theme);
   render();
   persist();
