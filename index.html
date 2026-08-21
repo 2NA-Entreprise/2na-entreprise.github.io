@@ -79,6 +79,10 @@ button{font-family:'Inter',sans-serif;}
 .btn-ghost{background:transparent;border-color:transparent;color:var(--muted);}
 .btn-danger{background:transparent;border-color:var(--danger);color:var(--danger);}
 .icon-btn{background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;display:inline-flex;}
+#mobile-menu-btn{display:none;color:var(--sidebar-text);flex-shrink:0;}
+#sidebar-close-btn{display:none;flex-shrink:0;}
+#mobile-backdrop{display:none;}
+#bottom-nav{display:none;}
 .icon-btn:hover{color:var(--text);}
 /* Inputs */
 input,select,textarea{background:var(--bg);border:1px solid var(--borderL);color:var(--text);border-radius:5px;padding:9px 10px;font-size:13px;font-family:'Inter',sans-serif;outline:none;width:100%;}
@@ -134,6 +138,67 @@ td{padding:9px 12px;border-bottom:1px solid var(--border);}
   .brand-title{display:none;}
   .navbtn{justify-content:center;}
   .formgrid{grid-template-columns:1fr;}
+  #mobile-menu-btn{display:inline-flex;}
+  #sidebar-close-btn{display:none;}
+  #sidebar{
+    position:fixed; top:0; left:0; bottom:0; width:80vw; max-width:300px;
+    transform:translateX(-100%); transition:transform .28s cubic-bezier(.4,0,.2,1); z-index:60;
+    box-shadow:8px 0 32px rgba(0,0,0,.4);
+  }
+  #sidebar.mobile-open{transform:translateX(0);}
+  #sidebar.mobile-open .brand-sub,
+  #sidebar.mobile-open .navbtn span.label,
+  #sidebar.mobile-open .sidebar-foot,
+  #sidebar.mobile-open .nav-section,
+  #sidebar.mobile-open .brand-title{display:block;}
+  #sidebar.mobile-open .navbtn{justify-content:flex-start;}
+  #sidebar.mobile-open{width:80vw;}
+  #sidebar.mobile-open #sidebar-close-btn{display:inline-flex;color:var(--sidebar-text);}
+  #sidebar.mobile-open .brand-row{justify-content:space-between;}
+  #mobile-backdrop{display:none;position:fixed;inset:0;background:rgba(10,16,24,.55);backdrop-filter:blur(1px);z-index:55;}
+  #mobile-backdrop.show{display:block;}
+  body{padding-bottom:66px;}
+  #bottom-nav{
+    display:flex; position:fixed; left:0; right:0; bottom:0; height:64px;
+    background:linear-gradient(180deg,var(--sidebar-bg) 0%,var(--sidebar-bg2) 100%);
+    border-top:1px solid rgba(255,255,255,.12); z-index:40; padding-bottom:env(safe-area-inset-bottom);
+    box-shadow:0 -4px 16px rgba(0,0,0,.2);
+  }
+  .bn-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    background:none;border:none;color:var(--sidebar-muted);font-size:10px;font-family:'Inter',sans-serif;padding:6px 2px;position:relative;}
+  .bn-btn svg{width:20px;height:20px;}
+  .bn-btn.active{color:var(--accent);}
+  .bn-btn.active::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:26px;height:3px;border-radius:0 0 4px 4px;background:var(--accent);}
+  .bn-btn-more{color:var(--sidebar-muted);}
+  .btn{min-height:38px;}
+  #topbar .btn{font-size:11.5px;padding:7px 10px;}
+  #topbar-actions{gap:4px;}
+  #user-info-top{display:none;}
+  #page-title-bar{padding:14px 16px 12px;}
+  #page-title-bar h1{font-size:20px;}
+  .wrap{padding:16px !important;}
+  .grid-kpi{grid-template-columns:repeat(2,1fr);}
+  .modal{max-width:94vw !important;max-height:88vh;}
+  .modal-body{max-height:70vh;overflow-y:auto;}
+  /* Tableaux : défilement horizontal au lieu d'être coupés */
+  .plate > table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  table{font-size:12.5px;}
+  th,td{white-space:nowrap;}
+  /* Barre d'outils OT et rangées de boutons : défilement horizontal façon "chips" */
+  .wo-toolbar{flex-wrap:nowrap !important;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:10px;}
+  .wo-toolbar::-webkit-scrollbar{display:none;}
+  .wo-toolbar .btn{flex-shrink:0;}
+  .headrow{flex-direction:column;align-items:stretch !important;gap:10px;}
+  .headrow .row{flex-wrap:wrap;}
+  /* Cibles tactiles confortables + pas de zoom auto iOS sur les champs */
+  .btn{min-height:42px;}
+  input,select,textarea{font-size:16px !important;min-height:42px;}
+  textarea{min-height:80px;}
+  .icon-btn{min-width:38px;min-height:38px;display:inline-flex;align-items:center;justify-content:center;}
+}
+@media(max-width:420px){
+  .grid-kpi{grid-template-columns:1fr 1fr;}
+  .bn-btn{font-size:9px;}
 }
 #auth-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
 .auth-card{width:100%;max-width:380px;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:28px;}
@@ -147,10 +212,11 @@ td{padding:9px 12px;border-bottom:1px solid var(--border);}
 </head>
 <body>
 <div id="auth-screen" style="display:none;"></div>
+<div id="mobile-backdrop"></div>
 <div id="app" style="display:none;">
   <aside id="sidebar">
     <div class="brand">
-      <div class="brand-row"><img src="icon.svg" alt="Logo" class="brand-logo"/><span class="brand-title">2NA-MAINT-PROD</span></div>
+      <div class="brand-row"><img src="icon.svg" alt="Logo" class="brand-logo"/><span class="brand-title">2NA-MAINT-PROD</span><button class="icon-btn" id="sidebar-close-btn" aria-label="Fermer"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div>
       <div class="brand-sub">Maintenance & Carburant</div>
       <div id="env-badge" style="margin-top:8px;"></div>
     </div>
@@ -163,6 +229,7 @@ td{padding:9px 12px;border-bottom:1px solid var(--border);}
     <div id="sticky-header">
       <div id="offline-banner" style="display:none;"></div>
       <div id="topbar">
+        <button class="icon-btn" id="mobile-menu-btn" aria-label="Menu"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
         <span id="user-info-top"></span>
         <span class="led" id="sync-dot" style="background:var(--muted)"></span>
         <span id="sync-text">Connexion…</span>
@@ -176,6 +243,7 @@ td{padding:9px 12px;border-bottom:1px solid var(--border);}
     <div class="wrap" id="content"></div>
   </main>
 </div>
+<nav id="bottom-nav"></nav>
 <div id="modal-root"></div>
 <div id="toast-root"></div>
 
@@ -746,6 +814,35 @@ const NAV = [
     {id:'audit', label:'Historique & audit', icon:'receipt'},
   ]},
 ];
+function openMobileMenu(){
+  const sb = document.getElementById('sidebar');
+  const bd = document.getElementById('mobile-backdrop');
+  if(sb) sb.classList.add('mobile-open');
+  if(bd) bd.classList.add('show');
+}
+function closeMobileMenu(){
+  const sb = document.getElementById('sidebar');
+  const bd = document.getElementById('mobile-backdrop');
+  if(sb) sb.classList.remove('mobile-open');
+  if(bd) bd.classList.remove('show');
+}
+function renderBottomNav(){
+  const bn = document.getElementById('bottom-nav');
+  if(!bn) return;
+  if(!currentUser){ bn.innerHTML=''; return; }
+  const items = [
+    {id:'dashboard', label:'Accueil', icon:'gauge'},
+    {id:'wo', label:'OT', icon:'wrench'},
+    {id:'fleet', label:'Flotte', icon:'truck'},
+    {id:'parts', label:'Stock', icon:'package'},
+  ].filter(it=>canSee(it.id));
+  const moreIcon = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>';
+  bn.innerHTML = items.map(it=>`<button class="bn-btn ${currentView===it.id?'active':''}" data-bn-nav="${it.id}">${ICONS[it.icon]}<span>${it.label}</span></button>`).join('')
+    + `<button class="bn-btn bn-btn-more" id="bn-menu-btn">${moreIcon}<span>Menu</span></button>`;
+  bn.querySelectorAll('[data-bn-nav]').forEach(b=>b.addEventListener('click',()=>{ currentView=b.dataset.bnNav; resaValidatingId=null; render(); }));
+  const bnMenu = document.getElementById('bn-menu-btn');
+  if(bnMenu) bnMenu.addEventListener('click', openMobileMenu);
+}
 function renderNav(){
   const nav = document.getElementById('nav');
   nav.innerHTML = NAV.map(group=>{
@@ -758,7 +855,7 @@ function renderNav(){
       ${ICONS[n.icon]}<span class="label">${n.label}</span>
     </button>`).join('')}
   `;}).join('');
-  nav.querySelectorAll('[data-nav]').forEach(b=>b.addEventListener('click',()=>{ currentView=b.dataset.nav; resaValidatingId=null; render(); }));
+  nav.querySelectorAll('[data-nav]').forEach(b=>b.addEventListener('click',()=>{ currentView=b.dataset.nav; resaValidatingId=null; closeMobileMenu(); render(); }));
   document.getElementById('fleet-count').textContent = `${state.fleet.length} engins · ${state.plantEquipment.length} machines`;
   const uiTop = document.getElementById('user-info-top');
   if(uiTop && currentUser){
@@ -834,6 +931,7 @@ function promoteTitle(){
 function render(){
   if(!canSee(currentView)) currentView = 'dashboard';
   renderNav();
+  renderBottomNav();
   renderEnvBadges();
   const c = document.getElementById('content');
   if(currentView==='dashboard') c.innerHTML = viewDashboard();
@@ -4595,7 +4693,7 @@ function confirmModal(message, onConfirm, opts={}){
 /* ============ CRUD HANDLERS ============ */
 function attachHandlers(){
   // global nav-from-content
-  document.querySelectorAll('[data-nav]').forEach(b=>b.addEventListener('click',()=>{ currentView=b.dataset.nav; resaValidatingId=null; render(); }));
+  document.querySelectorAll('[data-nav]').forEach(b=>b.addEventListener('click',()=>{ currentView=b.dataset.nav; resaValidatingId=null; closeMobileMenu(); render(); }));
 
   // Dashboard : filtres et éléments interactifs
   const dff = document.getElementById('dash-filter-famille');
@@ -5661,6 +5759,9 @@ function attachHandlers(){
 }
 
 /* ============ INIT ============ */
+document.getElementById('mobile-menu-btn').addEventListener('click', openMobileMenu);
+document.getElementById('sidebar-close-btn').addEventListener('click', closeMobileMenu);
+document.getElementById('mobile-backdrop').addEventListener('click', closeMobileMenu);
 document.getElementById('refresh-btn').addEventListener('click', async ()=>{
   const btn = document.getElementById('refresh-btn');
   btn.disabled = true; btn.textContent = '...';
