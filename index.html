@@ -375,6 +375,7 @@ async function afterAuthSuccess(){
     statutCompte: roleRow.statut_compte||'Actif', affectation: roleRow.affectation||'Les deux', superieurId: roleRow.superieur_id||null, niveauApprobation: roleRow.niveau_approbation||'Technique',
     modules: roleRow.modules||{} };
   try{ await sb.rpc('update_last_login'); }catch(e){}
+  allUsers = [];
   document.getElementById('auth-screen').style.display = 'none';
   document.getElementById('app').style.display = 'flex';
   await init();
@@ -5989,6 +5990,7 @@ document.getElementById('refresh-btn').addEventListener('click', async ()=>{
   const btn = document.getElementById('refresh-btn');
   btn.disabled = true; btn.textContent = '...';
   const res = await loadRemote();
+  if(currentView==='users') await loadAllUsers();
   if(res.ok){
     state = res.payload; normalizeState();
     applyTheme(state.theme);
