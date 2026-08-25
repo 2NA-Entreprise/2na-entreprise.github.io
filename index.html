@@ -397,7 +397,7 @@ function canSee(navId){
   if(mod && currentUser.modules && currentUser.modules[mod]==='Aucun') return false;
   const restricted = {
     planificateur: ['users','user-create','user-edit','audit'],
-    technicien: ['fleet','fleet-edit','pm','pm-edit','gammes','gamme-edit','fuel','fuel-edit','parts','part-edit','mvt-new','floc','floc-edit','plant','plant-edit','production','prod-edit','measures','measures-edit','costs','cc-edit','personnel','personnel-edit','reports','settings','users','user-create','user-edit','audit','da','da-edit','bc','bc-edit','bc-receive','resa','resa-new'],
+    technicien: ['dashboard','fleet','fleet-edit','pm','pm-edit','gammes','gamme-edit','fuel','fuel-edit','parts','part-edit','mvt-new','floc','floc-edit','plant','plant-edit','production','prod-edit','measures','measures-edit','costs','cc-edit','personnel','personnel-edit','conges','conge-edit','formations','formation-edit','effectifs','recrutement','candidature-edit','maternite','maternity-edit','reports','settings','users','user-create','user-edit','audit','da','da-edit','bc','bc-edit','bc-receive','resa','resa-new'],
     rh: ['fleet','fleet-edit','wo','wo-edit','pm','pm-edit','gammes','gamme-edit','fuel','fuel-edit','parts','part-edit','mvt-new','floc','floc-edit','plant','plant-edit','production','prod-edit','notif','notif-edit','measures','measures-edit','costs','cc-edit','reports','settings','users','user-create','user-edit','audit','da','da-edit','bc','bc-edit','bc-receive','resa','resa-new'],
   };
   const blocked = restricted[currentUser.role] || [];
@@ -939,7 +939,13 @@ function promoteTitle(){
   bar.style.display = 'none';
 }
 function render(){
-  if(!canSee(currentView)) currentView = 'dashboard';
+  if(!canSee(currentView)){
+    if(canSee('dashboard')) currentView = 'dashboard';
+    else {
+      const firstAllowed = NAV.flatMap(s=>s.items).find(i=>canSee(i.id));
+      currentView = firstAllowed ? firstAllowed.id : 'dashboard';
+    }
+  }
   renderNav();
   renderBottomNav();
   renderEnvBadges();
@@ -5654,8 +5660,11 @@ function attachHandlers(){
   if(userEditPassSubmit) userEditPassSubmit.addEventListener('click', async ()=>{
     const u = allUsers.find(x=>x.user_id===userEditDraftId);
     if(!u) return;
-    const p1 = document.getElementById('user-edit-pass1').value;
-    const p2 = document.getElementById('user-edit-pass2').value;
+    const p1input = document.getElementById('user-edit-pass1');
+    const p2input = document.getElementById('user-edit-pass2');
+    if(!p1input || !p2input) return;
+    const p1 = p1input.value;
+    const p2 = p2input.value;
     if(p1.length<6){ alert('Le mot de passe doit contenir au moins 6 caractères'); return; }
     if(p1!==p2){ alert('Les deux mots de passe ne correspondent pas'); return; }
     if(!confirm('Réinitialiser le mot de passe de '+(u.nom_complet||u.identifiant)+' ?')) return;
@@ -5667,12 +5676,17 @@ function attachHandlers(){
       if(error) throw error;
       if(data && data.error) throw new Error(data.error);
       toast('Mot de passe réinitialisé pour '+(u.nom_complet||u.identifiant));
-      document.getElementById('user-edit-pass1').value='';
-      document.getElementById('user-edit-pass2').value='';
+      const freshP1 = document.getElementById('user-edit-pass1');
+      const freshP2 = document.getElementById('user-edit-pass2');
+      if(freshP1) freshP1.value='';
+      if(freshP2) freshP2.value='';
     }catch(err){
-      alert("Erreur : "+((err&&err.message)||String(err))+"\n\nSi cette fonction n'est pas encore installée sur Supabase, demande à ton assistant de te guider pour la mettre en place (Edge Function \"admin-reset-password\").");
+      console.error('admin-reset-password error:', err);
+      const detail = (err&&err.message) ? err.message : String(err);
+      alert("Erreur : "+detail+"\n\n⚠️ Vérifie quand même en te déconnectant et en essayant de te connecter avec le nouveau mot de passe : il est possible que le changement ait réussi côté serveur malgré cette erreur d'affichage.\n\nSi ça ne fonctionne pas, vérifie les journaux de la fonction sur Supabase (Edge Functions → admin-reset-password → Logs), ou demande à ton assistant.");
     }
-    userEditPassSubmit.disabled = false; userEditPassSubmit.innerHTML = `${ICONS.close} Réinitialiser ce mot de passe`;
+    const btnAgain = document.getElementById('user-edit-pass-submit');
+    if(btnAgain){ btnAgain.disabled = false; btnAgain.innerHTML = `${ICONS.close} Réinitialiser ce mot de passe`; }
   });
   document.querySelectorAll('[data-edit-user]').forEach(b=>b.addEventListener('click',(e)=>{
     e.stopPropagation();
