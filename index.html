@@ -390,14 +390,14 @@ function canSee(navId){
   if(!currentUser) return false;
   if(currentUser.statutCompte==='Inactif') return false;
   if(currentUser.role==='admin') return true;
-  const moduleOf = { wo:'maintenance', pm:'maintenance', notif:'maintenance', floc:'maintenance', plant:'maintenance', production:'maintenance', measures:'maintenance', fleet:'maintenance', fuel:'maintenance',
+  const moduleOf = { wo:'maintenance', pm:'maintenance', gammes:'maintenance', notif:'maintenance', floc:'maintenance', plant:'maintenance', production:'maintenance', measures:'maintenance', fleet:'maintenance', fuel:'maintenance',
     parts:'stock', resa:'stock', da:'achats', bc:'achats', personnel:'rh', conges:'rh', formations:'rh', effectifs:'rh', recrutement:'rh', maternite:'rh', dashboard:'reporting', costs:'reporting', reports:'reporting' };
   const mod = moduleOf[navId];
   if(mod && currentUser.modules && currentUser.modules[mod]==='Aucun') return false;
   const restricted = {
     planificateur: ['users','user-create','user-edit','audit'],
-    technicien: ['fleet','fleet-edit','pm','pm-edit','fuel','fuel-edit','parts','part-edit','mvt-new','floc','floc-edit','plant','plant-edit','production','prod-edit','measures','measures-edit','costs','cc-edit','personnel','personnel-edit','reports','settings','users','user-create','user-edit','audit','da','da-edit','bc','bc-edit','bc-receive','resa','resa-new'],
-    rh: ['fleet','fleet-edit','wo','wo-edit','pm','pm-edit','fuel','fuel-edit','parts','part-edit','mvt-new','floc','floc-edit','plant','plant-edit','production','prod-edit','notif','notif-edit','measures','measures-edit','costs','cc-edit','reports','settings','users','user-create','user-edit','audit','da','da-edit','bc','bc-edit','bc-receive','resa','resa-new'],
+    technicien: ['fleet','fleet-edit','pm','pm-edit','gammes','gamme-edit','fuel','fuel-edit','parts','part-edit','mvt-new','floc','floc-edit','plant','plant-edit','production','prod-edit','measures','measures-edit','costs','cc-edit','personnel','personnel-edit','reports','settings','users','user-create','user-edit','audit','da','da-edit','bc','bc-edit','bc-receive','resa','resa-new'],
+    rh: ['fleet','fleet-edit','wo','wo-edit','pm','pm-edit','gammes','gamme-edit','fuel','fuel-edit','parts','part-edit','mvt-new','floc','floc-edit','plant','plant-edit','production','prod-edit','notif','notif-edit','measures','measures-edit','costs','cc-edit','reports','settings','users','user-create','user-edit','audit','da','da-edit','bc','bc-edit','bc-receive','resa','resa-new'],
   };
   const blocked = restricted[currentUser.role] || [];
   return !blocked.includes(navId);
@@ -460,6 +460,10 @@ function normalizeState(){
   if(!Array.isArray(state.candidatures)) state.candidatures = [];
   if(!Array.isArray(state.statutsRecrutement) || state.statutsRecrutement.length===0) state.statutsRecrutement = ["Reçue","Présélection","Entretien","Test technique","Offre","Embauché","Refusée"];
   if(!Array.isArray(state.maternityPlans)) state.maternityPlans = [];
+  if(!Array.isArray(state.normesHSE) || state.normesHSE.length===0) state.normesHSE = ["Aucune","ATEX","Électrique (NFC 18-510)","Levage","Travail en hauteur","Espace confiné","Chimique","Autre"];
+  if(!Array.isArray(state.typesStrategieMaintenance) || state.typesStrategieMaintenance.length===0) state.typesStrategieMaintenance = ["Préventif systématique","Conditionnel","Prédictif","Correctif"];
+  if(!Array.isArray(state.objectifsMaintenance) || state.objectifsMaintenance.length===0) state.objectifsMaintenance = ["Disponibilité","Sécurité","Réduction des coûts","Environnement"];
+  if(!Array.isArray(state.gammesOperatoires)) state.gammesOperatoires = [];
   state.personnel.forEach(p=>{ if(p.soldeConges===undefined || p.soldeConges===null || p.soldeConges==='') p.soldeConges = 26; });
 }
 async function loadRemote(){
@@ -716,7 +720,11 @@ let state = { fleet: [], workOrders: [], fuelLogs: [], parts: [], pmPlans: [], l
   leaveRequests: [], typesConge: ["Congé annuel","Congé maladie","Congé sans solde","Congé maternité / paternité","Autre"],
   trainings: [], typesFormation: ["Formation technique","Habilitation sécurité","Certification","Recyclage","Autre"],
   candidatures: [], statutsRecrutement: ["Reçue","Présélection","Entretien","Test technique","Offre","Embauché","Refusée"],
-  maternityPlans: [] };
+  maternityPlans: [],
+  normesHSE: ["Aucune","ATEX","Électrique (NFC 18-510)","Levage","Travail en hauteur","Espace confiné","Chimique","Autre"],
+  typesStrategieMaintenance: ["Préventif systématique","Conditionnel","Prédictif","Correctif"],
+  objectifsMaintenance: ["Disponibilité","Sécurité","Réduction des coûts","Environnement"],
+  gammesOperatoires: [] };
 let currentView = 'dashboard';
 
 /* ============ HELPERS ============ */
@@ -780,6 +788,7 @@ const NAV = [
   { section:'Flotte', items:[
     {id:'fleet', label:'Flotte', icon:'truck'},
     {id:'pm', label:'Préventif', icon:'calendar'},
+    {id:'gammes', label:'Gammes opératoires', icon:'layers'},
     {id:'fuel', label:'Carburant', icon:'fuel'},
     {id:'measures', label:'Compteurs / mesures', icon:'ruler'},
   ]},
@@ -940,6 +949,8 @@ function render(){
   else if(currentView==='wo') c.innerHTML = viewWO();
   else if(currentView==='wo-edit') c.innerHTML = viewWOEdit();
   else if(currentView==='pm') c.innerHTML = viewPM();
+  else if(currentView==='gammes') c.innerHTML = viewGammes();
+  else if(currentView==='gamme-edit') c.innerHTML = viewGammeEdit();
   else if(currentView==='pm-edit') c.innerHTML = viewPMEdit();
   else if(currentView==='fuel') c.innerHTML = viewFuel();
   else if(currentView==='fuel-edit') c.innerHTML = viewFuelEdit();
@@ -1201,6 +1212,7 @@ function viewFleet(){
     <div class="row">
       <input id="fleet-search" placeholder="Rechercher…" style="width:180px;" value="${esc(fleetSearch)}"/>
       <button class="btn btn-ghost" data-open-types="1">${ICONS.layers} Familles</button>
+      <button class="btn btn-ghost" id="fleet-export-btn">${ICONS.receipt} Exporter Excel</button>
       <button class="btn btn-ghost" id="fleet-import-btn">${ICONS.plus} Importer Excel</button>
       <input type="file" id="fleet-import-file" accept=".xlsx,.xls,.csv" style="display:none;"/>
       <button class="btn btn-accent" id="fleet-new-btn">${ICONS.plus} Nouvel engin</button>
@@ -1236,7 +1248,12 @@ function fleetForm(e){
     <label class="field"><span>Code</span><input data-f="code" value="${esc(e.code)}" placeholder="PEL-07"/></label>
     <label class="field"><span>Famille d'équipement</span><select data-f="type">${state.equipTypes.map(t=>`<option ${e.type===t?'selected':''}>${t}</option>`).join('')}</select></label>
     <label class="field span2"><span>Nom / désignation</span><input data-f="nom" value="${esc(e.nom)}"/></label>
+    <label class="field"><span>Marque</span><input data-f="marque" value="${esc(e.marque)}" placeholder="Caterpillar"/></label>
+    <label class="field"><span>Modèle</span><input data-f="modele" value="${esc(e.modele)}" placeholder="320D"/></label>
+    <label class="field"><span>Numéro de série</span><input data-f="numeroSerie" value="${esc(e.numeroSerie)}"/></label>
+    <label class="field"><span>Niveau de criticité</span><select data-f="niveauCriticite">${state.niveauxCriticite.map(n=>`<option ${(e.niveauCriticite||'C')===n?'selected':''}>${n}</option>`).join('')}</select></label>
     <label class="field"><span>Statut</span><select data-f="statut">${STATUTS.map(s=>`<option ${e.statut===s?'selected':''}>${s}</option>`).join('')}</select></label>
+    <label class="field"><span>Date de mise en service</span><input type="date" data-f="dateMiseEnService" value="${e.dateMiseEnService||''}"/></label>
     <label class="field"><span>Heures compteur</span><input type="number" data-f="heures" value="${e.heures||0}"/></label>
     <label class="field"><span>Kilométrage</span><input type="number" data-f="km" value="${e.km||0}"/></label>
     <label class="field"><span>Dernier entretien</span><input type="date" data-f="dernierEntretien" value="${e.dernierEntretien||''}"/></label>
@@ -1280,6 +1297,33 @@ function findCol(row, names){
   }
   return '';
 }
+function exportFleetToExcel(){
+  if(state.fleet.length===0){ alert("Aucun engin à exporter."); return; }
+  const ccMap = Object.fromEntries(state.costCenters.map(c=>[c.id,c.code]));
+  const rows = state.fleet.map(e=>({
+    'Code': e.code||'',
+    'Nom ou désignation': e.nom||'',
+    'Famille': e.type||'',
+    'Marque': e.marque||'',
+    'Modèle': e.modele||'',
+    'Numéro de série': e.numeroSerie||'',
+    'Niveau criticité': e.niveauCriticite||'C',
+    'Statut': e.statut||'Opérationnel',
+    'Date mise en service': e.dateMiseEnService||'',
+    'Heures compteur': e.heures||0,
+    'Kilométrage': e.km||0,
+    'Dernier entretien': e.dernierEntretien||'',
+    'Prochain entretien': e.prochainEntretien||'',
+    'Conso réf 100h': e.conso100h||0,
+    'Centre de coût': e.centreCoutId ? (ccMap[e.centreCoutId]||'') : ''
+  }));
+  const ws = XLSX.utils.json_to_sheet(rows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Flotte');
+  const dateStr = new Date().toISOString().slice(0,10);
+  XLSX.writeFile(wb, '2NA-MAINT-PROD_flotte_'+dateStr+'.xlsx');
+  toast('Export généré — '+state.fleet.length+' engin(s)');
+}
 function importFleetRows(rows){
   let count=0;
   rows.forEach(r=>{
@@ -1289,12 +1333,29 @@ function importFleetRows(rows){
     const type = String(findCol(r,["Famille","Famille d'équipement",'Type'])||state.equipTypes[0]);
     if(!state.equipTypes.includes(type)) state.equipTypes.push(type);
     const statut = String(findCol(r,['Statut'])||'Opérationnel');
+    const marque = String(findCol(r,['Marque'])||'');
+    const modele = String(findCol(r,['Modèle','Modele'])||'');
+    const numeroSerie = String(findCol(r,['Numéro de série','Numero de serie','N° série','N série'])||'');
+    const niveauCriticite = String(findCol(r,['Niveau criticité','Niveau','Criticité'])||'');
+    const dateMiseEnService = String(findCol(r,['Date mise en service','Mise en service'])||'');
     const heures = Number(findCol(r,['Heures','Heures compteur']))||0;
     const km = Number(findCol(r,['Kilométrage','KM','Km']))||0;
+    const dernierEntretien = String(findCol(r,['Dernier entretien'])||'');
+    const prochainEntretien = String(findCol(r,['Prochain entretien'])||'');
+    const conso100h = Number(findCol(r,['Conso réf 100h','Conso 100h','Consommation']));
     const ccCode = String(findCol(r,['Centre de coût','Centre de cout'])||'').trim();
     const cc = state.costCenters.find(c=>c.code.toLowerCase()===ccCode.toLowerCase());
     const existing = state.fleet.find(e=>e.code.toLowerCase()===code.toLowerCase());
-    const obj = { code, nom, type, statut: STATUTS.includes(statut)?statut:'Opérationnel', heures, km, dernierEntretien:'', prochainEntretien:'', conso100h: existing?existing.conso100h:15, centreCoutId: cc?cc.id:(existing?existing.centreCoutId:null) };
+    const obj = { code, nom, type, statut: STATUTS.includes(statut)?statut:'Opérationnel', heures, km,
+      marque: marque || (existing?existing.marque:''),
+      modele: modele || (existing?existing.modele:''),
+      numeroSerie: numeroSerie || (existing?existing.numeroSerie:''),
+      niveauCriticite: state.niveauxCriticite.includes(niveauCriticite)?niveauCriticite:(existing?existing.niveauCriticite:'C'),
+      dateMiseEnService: dateMiseEnService || (existing?existing.dateMiseEnService:''),
+      dernierEntretien: dernierEntretien || (existing?existing.dernierEntretien:''),
+      prochainEntretien: prochainEntretien || (existing?existing.prochainEntretien:''),
+      conso100h: conso100h || (existing?existing.conso100h:15),
+      centreCoutId: cc?cc.id:(existing?existing.centreCoutId:null) };
     if(existing) Object.assign(existing, obj); else state.fleet.push({...obj, id:uid()});
     count++;
   });
@@ -1721,7 +1782,12 @@ function viewWOEdit(){
     <h3 class="oswald" style="text-transform:uppercase;font-size:13px;margin:0 0 12px;color:var(--muted);">Sécurité / HSE</h3>
     <div class="formgrid">
       <label class="field" style="flex-direction:row;align-items:center;gap:8px;"><input type="checkbox" id="wo-f-permis" ${w.permisTravail?'checked':''} style="width:auto;"/><span>Permis de travail délivré</span></label>
+      <label class="field"><span>Norme / réglementation applicable</span><select id="wo-f-norme">${state.normesHSE.map(n=>`<option ${w.normeHSE===n?'selected':''}>${n}</option>`).join('')}</select></label>
       <label class="field span2"><span>Consignation / autorisations</span><input id="wo-f-consignation" value="${esc(w.consignation)}" placeholder="Ex: LOTO ligne 3, cadenas n°12"/></label>
+      <label class="field" style="flex-direction:row;align-items:center;gap:8px;"><input type="checkbox" id="wo-f-validationSuperviseur" ${w.validationSuperviseur?'checked':''} style="width:auto;"/><span>Validation superviseur (intervention conforme)</span></label>
+      <label class="field" style="flex-direction:row;align-items:center;gap:8px;"><input type="checkbox" id="wo-f-incidentSignale" ${w.incidentSignale?'checked':''} style="width:auto;"/><span>Incident / presqu'accident signalé</span></label>
+      <label class="field span2"><span>Description de l'incident (si applicable)</span><textarea id="wo-f-incidentDesc" rows="2">${esc(w.incidentDescription||'')}</textarea></label>
+      <label class="field span2"><span>Retour d'expérience / leçons apprises</span><textarea id="wo-f-retourExperience" rows="2">${esc(w.retourExperience||'')}</textarea></label>
     </div>
   </div>` : ''}
 
@@ -2140,6 +2206,16 @@ function wireWOEditor(){
     w.cout = Number(val('wo-f-cout', w.cout))||0;
     const permisEl = document.getElementById('wo-f-permis'); if(permisEl) w.permisTravail = permisEl.checked;
     const consigEl = document.getElementById('wo-f-consignation'); if(consigEl) w.consignation = consigEl.value;
+    w.normeHSE = val('wo-f-norme', w.normeHSE);
+    const valSupEl = document.getElementById('wo-f-validationSuperviseur');
+    if(valSupEl){
+      const wasChecked = w.validationSuperviseur;
+      w.validationSuperviseur = valSupEl.checked;
+      if(valSupEl.checked && !wasChecked){ w.superviseurValidateur = currentUser?currentUser.nomComplet:''; w.dateValidationHSE = new Date().toISOString().slice(0,10); }
+    }
+    const incEl = document.getElementById('wo-f-incidentSignale'); if(incEl) w.incidentSignale = incEl.checked;
+    w.incidentDescription = val('wo-f-incidentDesc', w.incidentDescription);
+    w.retourExperience = val('wo-f-retourExperience', w.retourExperience);
     w.dateCreation = w.dateCreation || w.dateDebut;
   }
   const saveHandler = ()=>{
@@ -2194,6 +2270,52 @@ function pmStatus(p, em){
   const label = p.prochaine ? `Échéance : ${p.prochaine}${daysLeft!==null?` (${daysLeft}j)`:''}` : 'Non planifié';
   return { urgent, label };
 }
+/* ============ GAMMES OPÉRATOIRES ============ */
+function gammeForm(g){
+  return `
+  <div class="formgrid">
+    <label class="field span2"><span>Intitulé</span><input data-f="nom" value="${esc(g.nom)}" placeholder="Vidange moteur + filtres"/></label>
+    <label class="field"><span>Famille d'équipement concernée</span><select data-f="familleEquipement"><option value="">Toutes familles</option>${state.equipTypes.map(t=>`<option ${g.familleEquipement===t?'selected':''}>${t}</option>`).join('')}</select></label>
+    <label class="field"><span>Durée estimée (minutes)</span><input type="number" data-f="dureeEstimee" value="${g.dureeEstimee||60}"/></label>
+    <label class="field span2"><span>Description courte</span><input data-f="description" value="${esc(g.description||'')}"/></label>
+    <label class="field span2"><span>Procédure détaillée</span><textarea data-f="procedure" rows="5" placeholder="1. Couper le moteur et laisser refroidir...">${esc(g.procedure||'')}</textarea></label>
+    <label class="field"><span>Outils requis</span><textarea data-f="outilsRequis" rows="2">${esc(g.outilsRequis||'')}</textarea></label>
+    <label class="field"><span>EPI requis</span><textarea data-f="epiRequis" rows="2" placeholder="Gants, lunettes, chaussures de sécurité...">${esc(g.epiRequis||'')}</textarea></label>
+    <label class="field span2"><span>Norme / réglementation HSE associée</span><select data-f="normeHSE">${state.normesHSE.map(n=>`<option ${g.normeHSE===n?'selected':''}>${n}</option>`).join('')}</select></label>
+  </div>`;
+}
+let gammeDraft = null;
+let gammeIsNew = false;
+function viewGammeEdit(){
+  return fullFormPageHtml(gammeIsNew?'Nouvelle gamme opératoire':'Modifier la gamme opératoire', 'Procédure standardisée réutilisable — outils, EPI et durée type', gammeForm(gammeDraft));
+}
+function viewGammes(){
+  const list = [...state.gammesOperatoires].sort((a,b)=>(a.nom||'').localeCompare(b.nom||''));
+  return `
+  <div class="headrow">
+    <div><h1>Gammes opératoires</h1><p class="subtitle" style="margin:0;">Catalogue de procédures standardisées, réutilisables dans le préventif et les OT</p></div>
+    <button class="btn btn-accent" id="gamme-new-btn">${ICONS.plus} Nouvelle gamme</button>
+  </div>
+  ${list.length===0?`<div class="plate p16"><div class="empty">${ICONS.wrench}<span>Aucune gamme opératoire définie — crée des procédures types (vidange, graissage, contrôle électrique...) pour les réutiliser dans le préventif.</span></div></div>`:
+  `<div style="display:flex;flex-direction:column;gap:8px;">
+  ${list.map(g=>`
+  <div class="plate p14 between wrapwrap legend-clickable" data-edit-gamme-row="${g.id}" style="gap:12px;">
+    <div>
+      <div class="row" style="flex-wrap:wrap;">
+        <span style="font-size:13px;font-weight:500;">${esc(g.nom)}</span>
+        ${g.familleEquipement?`<span class="badge">${esc(g.familleEquipement)}</span>`:`<span class="badge" style="color:var(--muted);">Toutes familles</span>`}
+        ${g.normeHSE && g.normeHSE!=='Aucune'?`<span class="badge" style="color:var(--danger);border-color:var(--danger);">${esc(g.normeHSE)}</span>`:''}
+      </div>
+      <div style="font-size:12px;color:var(--muted);">${esc(g.description)||'—'} · ${g.dureeEstimee||60} min</div>
+    </div>
+    <div class="row">
+      <button class="icon-btn" data-edit-gamme="${g.id}">${ICONS.edit}</button>
+      <button class="icon-btn" data-del-gamme="${g.id}">${ICONS.trash}</button>
+    </div>
+  </div>`).join('')}
+  </div>`}`;
+}
+
 function viewPM(){
   const em = equipMap();
   const sorted = [...state.pmPlans].sort((a,b)=> (pmStatus(a,em).urgent===pmStatus(b,em).urgent)?0:(pmStatus(a,em).urgent?-1:1));
@@ -2225,7 +2347,8 @@ let pmDraft = null;
 let pmIsNew = false;
 function blankPM(){
   return { id:null, equipementId: state.fleet[0]?.id||state.plantEquipment[0]?.id||'', tache:'', type:'Date',
-    frequenceJours:90, derniere:'', prochaine:'', intervalle:250, derniereValeur:0 };
+    frequenceJours:90, derniere:'', prochaine:'', intervalle:250, derniereValeur:0,
+    gammeId:'', typeStrategie:state.typesStrategieMaintenance[0], objectif:state.objectifsMaintenance[0] };
 }
 function openPMEditor(id){
   pmIsNew = (id==='new');
@@ -2237,12 +2360,16 @@ function viewPMEdit(){
   const p = pmDraft;
   const allEquip = [...state.fleet.map(e=>({...e,grp:'Flotte'})), ...state.plantEquipment.map(e=>({...e,grp:'Usine'}))];
   const equipOpts = allEquip.map(e=>`<option value="${e.id}" ${p.equipementId===e.id?'selected':''}>[${e.grp}] ${e.code} — ${e.nom}</option>`).join('');
+  const gammeOpts = state.gammesOperatoires.map(g=>`<option value="${g.id}" ${p.gammeId===g.id?'selected':''}>${esc(g.nom)}${g.familleEquipement?' ('+esc(g.familleEquipement)+')':''}</option>`).join('');
   const isCounter = p.type==='Heures' || p.type==='Kilométrage';
   const unite = p.type==='Heures' ? 'h' : 'km';
   const body = `
   <div class="formgrid">
     <label class="field span2"><span>Équipement</span><select id="pm-f-equip">${equipOpts}</select></label>
+    <label class="field span2"><span>Gamme opératoire (optionnel — préremplit tâche et durée)</span><select id="pm-f-gamme"><option value="">— Aucune / tâche libre —</option>${gammeOpts}</select></label>
     <label class="field span2"><span>Tâche</span><input id="pm-f-tache" value="${esc(p.tache)}" placeholder="Vidange moteur + filtres"/></label>
+    <label class="field"><span>Type de stratégie</span><select id="pm-f-strategie">${state.typesStrategieMaintenance.map(t=>`<option ${p.typeStrategie===t?'selected':''}>${t}</option>`).join('')}</select></label>
+    <label class="field"><span>Objectif</span><select id="pm-f-objectif">${state.objectifsMaintenance.map(o=>`<option ${p.objectif===o?'selected':''}>${o}</option>`).join('')}</select></label>
     <label class="field span2"><span>Type de déclenchement</span><select id="pm-f-type">${PM_TYPES.map(t=>`<option ${p.type===t?'selected':''}>${t}</option>`).join('')}</select></label>
     ${!isCounter ? `
     <label class="field"><span>Fréquence (jours)</span><input type="number" id="pm-f-freq" value="${p.frequenceJours||90}"/></label>
@@ -2252,17 +2379,26 @@ function viewPMEdit(){
     <label class="field"><span>Dernier relevé au moment de l'entretien (${unite})</span><input type="number" id="pm-f-derniereValeur" value="${p.derniereValeur||0}"/></label>
     `}
   </div>`;
-  return fullFormPageHtml(pmIsNew?'Nouveau plan préventif':'Modifier le plan préventif', 'Planification par date ou par compteur (heures/km)', body);
+  return fullFormPageHtml(pmIsNew?'Nouveau plan préventif':'Modifier le plan préventif', 'Planification par date ou par compteur (heures/km) — appuyée sur une gamme opératoire réutilisable', body);
 }
 function wirePMEdit(){
   const p = pmDraft;
   document.getElementById('pm-f-type').addEventListener('change', (e)=>{ p.type = e.target.value; render(); });
+  const gammeSel = document.getElementById('pm-f-gamme');
+  if(gammeSel) gammeSel.addEventListener('change', (e)=>{
+    const g = state.gammesOperatoires.find(x=>x.id===e.target.value);
+    if(g){ document.getElementById('pm-f-tache').value = g.nom; p.gammeId = g.id; }
+    else { p.gammeId = ''; }
+  });
   const ffpBack = document.getElementById('ffp-back');
   if(ffpBack) ffpBack.addEventListener('click', ()=>{ currentView='pm'; pmDraft=null; render(); });
   const ffpSubmit = document.getElementById('ffp-submit');
   if(ffpSubmit) ffpSubmit.addEventListener('click', ()=>{
     p.equipementId = document.getElementById('pm-f-equip').value;
+    p.gammeId = document.getElementById('pm-f-gamme').value||'';
     p.tache = document.getElementById('pm-f-tache').value;
+    p.typeStrategie = document.getElementById('pm-f-strategie').value;
+    p.objectif = document.getElementById('pm-f-objectif').value;
     p.type = document.getElementById('pm-f-type').value;
     if(p.type==='Heures' || p.type==='Kilométrage'){
       p.intervalle = Number(document.getElementById('pm-f-intervalle').value)||0;
@@ -2730,6 +2866,10 @@ function plantForm(e){
     <label class="field"><span>Code</span><input data-f="code" value="${esc(e.code)}" placeholder="LIGNE-03"/></label>
     <label class="field"><span>Famille d'équipement</span><select data-f="type">${state.equipTypes.map(t=>`<option ${e.type===t?'selected':''}>${t}</option>`).join('')}</select></label>
     <label class="field span2"><span>Nom</span><input data-f="nom" value="${esc(e.nom)}"/></label>
+    <label class="field"><span>Marque</span><input data-f="marque" value="${esc(e.marque)}"/></label>
+    <label class="field"><span>Modèle</span><input data-f="modele" value="${esc(e.modele)}"/></label>
+    <label class="field"><span>Numéro de série</span><input data-f="numeroSerie" value="${esc(e.numeroSerie)}"/></label>
+    <label class="field"><span>Niveau de criticité</span><select data-f="niveauCriticite">${state.niveauxCriticite.map(n=>`<option ${(e.niveauCriticite||'C')===n?'selected':''}>${n}</option>`).join('')}</select></label>
     <label class="field"><span>Statut</span><select data-f="statut">${STATUTS.map(s=>`<option ${e.statut===s?'selected':''}>${s}</option>`).join('')}</select></label>
     <label class="field"><span>Date mise en service</span><input type="date" data-f="dateMiseEnService" value="${e.dateMiseEnService||''}"/></label>
     <label class="field span2"><span>Emplacement</span><select data-f="emplacementId"><option value="">—</option>${locOpts}</select></label>
@@ -3453,6 +3593,17 @@ function viewUserEdit(){
       <label class="field"><span>Nom complet</span><input data-f="nom_complet" value="${esc(u.nom_complet)}"/></label>
     </div>
     ${userAccessFieldsHtml(u)}
+  </div>
+  <div class="plate p16" style="margin-top:16px;border-color:var(--danger);">
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--danger);font-family:'Oswald',sans-serif;margin:0 0 8px;">Réinitialiser le mot de passe</div>
+    <p style="font-size:12px;color:var(--muted);margin:0 0 12px;">Réservé aux administrateurs — la personne devra utiliser ce nouveau mot de passe dès sa prochaine connexion.</p>
+    <div class="formgrid">
+      <label class="field"><span>Nouveau mot de passe</span><input type="password" id="user-edit-pass1" placeholder="Minimum 6 caractères"/></label>
+      <label class="field"><span>Confirmer</span><input type="password" id="user-edit-pass2"/></label>
+    </div>
+    <div class="row" style="margin-top:12px;">
+      <button class="btn btn-ghost" style="color:var(--danger);border-color:var(--danger);" id="user-edit-pass-submit">${ICONS.close} Réinitialiser ce mot de passe</button>
+    </div>
   </div>`;
 }
 
@@ -3493,7 +3644,8 @@ function editableListBlock(title, stateKey, prefix, placeholder){
 const EDITABLE_LIST_KEYS = { 'wo-typetravail':'typesTravail', 'wo-type':'woTypes', 'wo-priorite':'woPriorites',
   'cat-article':'categoriesArticle', 'unite-article':'unitesArticle', 'niveau-critic':'niveauxCriticite',
   'type-mvt':'typesMouvement', 'loc-type':'locationTypes', 'affectation':'affectations', 'fonction':'fonctions', 'niveau-appro':'niveauxApprobation',
-  'type-conge':'typesConge', 'type-formation':'typesFormation', 'statut-recrut':'statutsRecrutement' };
+  'type-conge':'typesConge', 'type-formation':'typesFormation', 'statut-recrut':'statutsRecrutement',
+  'norme-hse':'normesHSE', 'strategie-maint':'typesStrategieMaintenance', 'objectif-maint':'objectifsMaintenance' };
 function wireEditableLists(){
   document.querySelectorAll('[data-elist-add]').forEach(b=>b.addEventListener('click',()=>{
     const prefix = b.dataset.elistAdd; const key = EDITABLE_LIST_KEYS[prefix];
@@ -3520,6 +3672,9 @@ function wireEditableLists(){
       'type-conge': ()=>state.leaveRequests.some(c=>c.type===val),
       'type-formation': ()=>state.trainings.some(f=>f.type===val),
       'statut-recrut': ()=>state.candidatures.some(c=>c.statut===val),
+      'norme-hse': ()=>state.workOrders.some(w=>w.normeHSE===val) || state.gammesOperatoires.some(g=>g.normeHSE===val),
+      'strategie-maint': ()=>state.pmPlans.some(p=>p.typeStrategie===val),
+      'objectif-maint': ()=>state.pmPlans.some(p=>p.objectif===val),
     };
     const used = usageCheckers[prefix] ? usageCheckers[prefix]() : false;
     const doDelete = ()=>{ state[key].splice(i,1); persist(); render(); };
@@ -3585,6 +3740,9 @@ function viewSettings(){
     ${editableListBlock('Types de congé', 'typesConge', 'type-conge', 'Nouveau type (ex: Congé exceptionnel)')}
     ${editableListBlock('Types de formation', 'typesFormation', 'type-formation', 'Nouveau type (ex: Sécurité incendie)')}
     ${editableListBlock('Statuts de recrutement', 'statutsRecrutement', 'statut-recrut', 'Nouveau statut (ex: Vivier)')}
+    ${editableListBlock('Normes / réglementations HSE', 'normesHSE', 'norme-hse', 'Nouvelle norme (ex: ISO 45001)')}
+    ${editableListBlock('Types de stratégie de maintenance', 'typesStrategieMaintenance', 'strategie-maint', 'Nouveau type (ex: Basé condition)')}
+    ${editableListBlock('Objectifs de maintenance', 'objectifsMaintenance', 'objectif-maint', 'Nouvel objectif (ex: Qualité)')}
 
     <div class="plate p16">
       <h3 class="oswald" style="text-transform:uppercase;font-size:14px;margin:0 0 10px;">Autres référentiels</h3>
@@ -4716,6 +4874,8 @@ function attachHandlers(){
   // Fleet
   const fs = document.getElementById('fleet-search');
   if(fs) fs.addEventListener('input', e=>{ fleetSearch=e.target.value; render(); document.getElementById('fleet-search').focus(); document.getElementById('fleet-search').selectionStart = document.getElementById('fleet-search').value.length; });
+  const fleetExportBtn = document.getElementById('fleet-export-btn');
+  if(fleetExportBtn) fleetExportBtn.addEventListener('click', exportFleetToExcel);
   const fleetImportBtn = document.getElementById('fleet-import-btn');
   const fleetImportFile = document.getElementById('fleet-import-file');
   if(fleetImportBtn && fleetImportFile){
@@ -4826,6 +4986,45 @@ function attachHandlers(){
       state.pmPlans = state.pmPlans.filter(x=>x.id!==b.dataset.delPm);
       persist(); render(); toast('Plan supprimé');
     }, {danger:true, okLabel:'Supprimer'});
+  }));
+
+  // Gammes opératoires
+  const gamn = document.querySelector('#gamme-new-btn');
+  if(gamn) gamn.addEventListener('click', ()=>{
+    gammeDraft = {id:null, nom:'', familleEquipement:'', dureeEstimee:60, description:'', procedure:'', outilsRequis:'', epiRequis:'', normeHSE:state.normesHSE[0]};
+    gammeIsNew = true; currentView='gamme-edit'; render();
+  });
+  document.querySelectorAll('[data-edit-gamme]').forEach(b=>b.addEventListener('click',(e)=>{
+    e.stopPropagation();
+    gammeDraft = JSON.parse(JSON.stringify(state.gammesOperatoires.find(x=>x.id===b.dataset.editGamme)));
+    gammeIsNew = false; currentView='gamme-edit'; render();
+  }));
+  document.querySelectorAll('[data-edit-gamme-row]').forEach(row=>row.addEventListener('click',()=>{
+    gammeDraft = JSON.parse(JSON.stringify(state.gammesOperatoires.find(x=>x.id===row.dataset.editGammeRow)));
+    gammeIsNew = false; currentView='gamme-edit'; render();
+  }));
+  if(currentView==='gamme-edit'){
+    const ffpBack = document.getElementById('ffp-back');
+    if(ffpBack) ffpBack.addEventListener('click', ()=>{ currentView='gammes'; gammeDraft=null; render(); });
+    const ffpSubmit = document.getElementById('ffp-submit');
+    if(ffpSubmit) ffpSubmit.addEventListener('click', ()=>{
+      const data = collectDataF();
+      if(!data.nom){ alert('Intitulé requis'); return; }
+      const patch = {...data, dureeEstimee:Number(data.dureeEstimee)||60};
+      if(gammeIsNew){ state.gammesOperatoires.push({...patch, id:uid()}); persist(); toast('Gamme opératoire ajoutée'); }
+      else { const g = state.gammesOperatoires.find(x=>x.id===gammeDraft.id); Object.assign(g, patch); persist(); toast('Gamme opératoire mise à jour'); }
+      currentView='gammes'; gammeDraft=null; render();
+    });
+  }
+  document.querySelectorAll('[data-del-gamme]').forEach(b=>b.addEventListener('click',(e)=>{
+    e.stopPropagation();
+    const used = state.pmPlans.some(p=>p.gammeId===b.dataset.delGamme);
+    const doDelete = ()=>{
+      state.gammesOperatoires = state.gammesOperatoires.filter(x=>x.id!==b.dataset.delGamme);
+      persist(); render(); toast('Gamme opératoire supprimée');
+    };
+    if(used) confirmModal('Cette gamme est utilisée par au moins un plan préventif. La supprimer quand même ?', doDelete, {danger:true, okLabel:'Supprimer quand même'});
+    else confirmModal('Supprimer cette gamme opératoire ?', doDelete, {danger:true, okLabel:'Supprimer'});
   }));
 
   // Fuel
@@ -5450,6 +5649,30 @@ function attachHandlers(){
       currentView='users'; userEditDraftId=null; render(); toast('Profil mis à jour');
     }catch(err){ alert('Erreur : '+((err&&err.message)||String(err))); }
   });
+  const userEditPassSubmit = document.getElementById('user-edit-pass-submit');
+  if(userEditPassSubmit) userEditPassSubmit.addEventListener('click', async ()=>{
+    const u = allUsers.find(x=>x.user_id===userEditDraftId);
+    if(!u) return;
+    const p1 = document.getElementById('user-edit-pass1').value;
+    const p2 = document.getElementById('user-edit-pass2').value;
+    if(p1.length<6){ alert('Le mot de passe doit contenir au moins 6 caractères'); return; }
+    if(p1!==p2){ alert('Les deux mots de passe ne correspondent pas'); return; }
+    if(!confirm('Réinitialiser le mot de passe de '+(u.nom_complet||u.identifiant)+' ?')) return;
+    userEditPassSubmit.disabled = true; userEditPassSubmit.textContent = 'Réinitialisation...';
+    try{
+      const { data, error } = await sb.functions.invoke('admin-reset-password', {
+        body: { targetUserId: u.user_id, newPassword: p1 }
+      });
+      if(error) throw error;
+      if(data && data.error) throw new Error(data.error);
+      toast('Mot de passe réinitialisé pour '+(u.nom_complet||u.identifiant));
+      document.getElementById('user-edit-pass1').value='';
+      document.getElementById('user-edit-pass2').value='';
+    }catch(err){
+      alert("Erreur : "+((err&&err.message)||String(err))+"\n\nSi cette fonction n'est pas encore installée sur Supabase, demande à ton assistant de te guider pour la mettre en place (Edge Function \"admin-reset-password\").");
+    }
+    userEditPassSubmit.disabled = false; userEditPassSubmit.innerHTML = `${ICONS.close} Réinitialiser ce mot de passe`;
+  });
   document.querySelectorAll('[data-edit-user]').forEach(b=>b.addEventListener('click',(e)=>{
     e.stopPropagation();
     userEditDraftId = b.dataset.editUser; currentView='user-edit'; render();
@@ -5822,7 +6045,11 @@ async function init(){
       leaveRequests: [], typesConge: ["Congé annuel","Congé maladie","Congé sans solde","Congé maternité / paternité","Autre"],
       trainings: [], typesFormation: ["Formation technique","Habilitation sécurité","Certification","Recyclage","Autre"],
       candidatures: [], statutsRecrutement: ["Reçue","Présélection","Entretien","Test technique","Offre","Embauché","Refusée"],
-      maternityPlans: [] };
+      maternityPlans: [],
+      normesHSE: ["Aucune","ATEX","Électrique (NFC 18-510)","Levage","Travail en hauteur","Espace confiné","Chimique","Autre"],
+      typesStrategieMaintenance: ["Préventif systématique","Conditionnel","Prédictif","Correctif"],
+      objectifsMaintenance: ["Disponibilité","Sécurité","Réduction des coûts","Environnement"],
+      gammesOperatoires: [] };
   } else {
     // compatibilité ascendante : ajoute le module usine si absent d'un compte existant
     if(!data.locations || data.locations.length===0){
@@ -5867,6 +6094,10 @@ async function init(){
     data.candidatures = data.candidatures || [];
     data.statutsRecrutement = (data.statutsRecrutement && data.statutsRecrutement.length) ? data.statutsRecrutement : ["Reçue","Présélection","Entretien","Test technique","Offre","Embauché","Refusée"];
     data.maternityPlans = data.maternityPlans || [];
+    data.normesHSE = (data.normesHSE && data.normesHSE.length) ? data.normesHSE : ["Aucune","ATEX","Électrique (NFC 18-510)","Levage","Travail en hauteur","Espace confiné","Chimique","Autre"];
+    data.typesStrategieMaintenance = (data.typesStrategieMaintenance && data.typesStrategieMaintenance.length) ? data.typesStrategieMaintenance : ["Préventif systématique","Conditionnel","Prédictif","Correctif"];
+    data.objectifsMaintenance = (data.objectifsMaintenance && data.objectifsMaintenance.length) ? data.objectifsMaintenance : ["Disponibilité","Sécurité","Réduction des coûts","Environnement"];
+    data.gammesOperatoires = data.gammesOperatoires || [];
     (data.parts||[]).forEach(p=>{
       if(p.fournisseurPrincipal===undefined) p.fournisseurPrincipal = p.fournisseur||'';
       if(!p.categorie) p.categorie = state.categoriesArticle[4];
