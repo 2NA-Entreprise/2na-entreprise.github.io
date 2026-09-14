@@ -12,15 +12,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
 :root{
-  --bg:#EAF4FC; --panel:#FFFFFF; --panelR:#E3F0FB; --border:#C9DEEF; --borderL:#A9C7E0;
-  --text:#16324F; --muted:#5B7A93; --accent:#F2A63C; --steel:#3B82C4; --success:#2E9E5B; --danger:#D9483A;
+  --bg:#F4F5F7; --panel:#FFFFFF; --panelR:#EEF0F3; --border:#D5D8DD; --borderL:#B9BFC7;
+  --text:#1F2328; --muted:#6B7280; --accent:#E8992E; --steel:#2E6DA6; --success:#2E9E5B; --danger:#D9483A;
   --sidebar-bg:#2E6DA6; --sidebar-bg2:#1E5488; --sidebar-text:#FFFFFF; --sidebar-muted:#CBE1F4;
 }
 *{box-sizing:border-box;}
 html,body{height:100%;}
 body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;overflow:hidden;}
 .mono{font-family:'IBM Plex Mono',monospace;}
-.oswald{font-family:'Oswald',sans-serif;}
+.oswald{font-family:'Inter',sans-serif;}
 #app{display:flex;height:100vh;height:100dvh;}
 /* Sidebar */
 #sidebar{width:220px;flex-shrink:0;height:100%;overflow-y:auto;background:linear-gradient(180deg,var(--sidebar-bg) 0%,var(--sidebar-bg2) 100%);border-right:1px solid var(--border);display:flex;flex-direction:column;}
@@ -28,7 +28,7 @@ body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter',sans-se
 .brand-row{display:flex;align-items:center;gap:8px;}
 .dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);}
 .brand-logo{width:28px;height:28px;border-radius:8px;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.25);}
-.brand-title{font-family:'Oswald',sans-serif;letter-spacing:.05em;font-weight:600;font-size:14px;text-transform:uppercase;color:var(--text);}
+.brand-title{font-family:'Inter',sans-serif;letter-spacing:.05em;font-weight:600;font-size:14px;text-transform:uppercase;color:var(--text);}
 .brand-sub{font-size:11px;color:var(--muted);margin-top:4px;}
 #sidebar .brand-title{color:var(--sidebar-text);}
 #sidebar .brand-sub{color:var(--sidebar-muted);}
@@ -37,13 +37,13 @@ nav{flex:1;padding:12px 8px;display:flex;flex-direction:column;gap:2px;}
 .navbtn:hover{color:var(--sidebar-text);background:rgba(255,255,255,.06);}
 .navbtn.active{background:rgba(255,255,255,.1);color:var(--accent);border-left:2px solid var(--accent);}
 .navbtn svg{flex-shrink:0;}
-.nav-section{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--sidebar-muted);padding:14px 12px 4px;font-family:'Oswald',sans-serif;opacity:.7;}
+.nav-section{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--sidebar-muted);padding:14px 12px 4px;font-family:'Inter',sans-serif;opacity:.7;}
 .nav-section:first-child{padding-top:4px;}
 .sidebar-foot{padding:12px 16px;font-size:10px;color:var(--sidebar-muted);border-top:1px solid rgba(255,255,255,.1);}
 /* Main */
 #main{flex:1;min-width:0;overflow-y:auto;height:100%;}
 .wrap{max-width:1500px;margin:0;padding:24px 32px;}
-h1{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.03em;font-size:24px;margin:0 0 2px;}
+h1{font-family:'Inter',sans-serif;text-transform:uppercase;letter-spacing:.03em;font-size:24px;margin:0 0 2px;}
 .subtitle{color:var(--muted);font-size:14px;margin:0 0 20px;}
 .headrow{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px;}
 /* Plate */
@@ -64,7 +64,7 @@ h1{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.03em
 .grid-settings{grid-template-columns:repeat(auto-fill,minmax(300px,1fr));}
 @media(max-width:800px){.grid-2{grid-template-columns:1fr;}}
 /* KPI card */
-.kpi-label{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:11px;color:var(--muted);letter-spacing:.03em;}
+.kpi-label{font-family:'Inter',sans-serif;text-transform:uppercase;font-size:11px;color:var(--muted);letter-spacing:.03em;}
 .kpi-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
 .kpi-value{font-family:'IBM Plex Mono',monospace;font-size:28px;letter-spacing:-.02em;}
 .kpi-unit{font-size:12px;color:var(--muted);margin-left:4px;}
@@ -75,7 +75,8 @@ button{font-family:'Inter',sans-serif;}
 .btn:hover{box-shadow:0 1px 4px rgba(0,0,0,.12);}
 .btn:active{transform:scale(.97);}
 .btn:hover{opacity:.85;}
-.btn-accent{background:var(--accent);border-color:var(--accent);color:#1A1508;}
+.btn-accent{background:var(--panel);border:1px solid var(--steel);color:var(--steel);font-weight:600;}
+.btn-accent:hover{background:var(--panelR);}
 .btn-ghost{background:transparent;border-color:transparent;color:var(--muted);}
 .btn-danger{background:transparent;border-color:var(--danger);color:var(--danger);}
 .icon-btn{background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;display:inline-flex;}
@@ -102,12 +103,12 @@ td{padding:9px 12px;border-bottom:1px solid var(--border);}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:16px;z-index:100;}
 .modal{background:var(--panel);border:1px solid var(--borderL);border-radius:10px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;}
 .modal-head{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--border);}
-.modal-head h3{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:16px;margin:0;}
+.modal-head h3{font-family:'Inter',sans-serif;text-transform:uppercase;font-size:16px;margin:0;}
 .modal-body{padding:20px;}
 .modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px;}
 .wo-toolbar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--panelR);border:1px solid var(--border);border-radius:8px;margin-bottom:14px;position:sticky;top:0;z-index:5;}
 .wo-headband{background:var(--panel);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:6px;padding:14px 16px;margin-bottom:16px;}
-.wo-headband-label{font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Oswald',sans-serif;}
+.wo-headband-label{font-size:10px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Inter',sans-serif;}
 /* misc */
 .row{display:flex;align-items:center;gap:8px;}
 .between{display:flex;align-items:center;justify-content:space-between;}
@@ -272,8 +273,8 @@ const ROLE_LABELS_DEFAULT = [
 function roleLabel(id){ const r = (state.rolesApplicatifs||ROLE_LABELS_DEFAULT).find(x=>x.id===id); return r?r.label:(id||'—'); }
 const CAPACITES = [
   {id:'valider_avis', label:"Valider un avis technicien", full:"Valide ou refuse un avis technicien (pertinence, complétude) — étape 2 du circuit (Chef d'atelier)"},
-  {id:'planifier_ot', label:"Générer et planifier un OT", full:"Génère l'ordre de travail à partir d'un avis validé, affecte ressources, gammes opératoires et équipe — étape 3 du circuit (Planificateur)"},
-  {id:'autoriser_ot', label:"Autoriser le lancement d'un OT", full:"Vérifie la cohérence budgétaire/opérationnelle et autorise le lancement des travaux — étape 4 du circuit (Directeur d'exploitation)"},
+  {id:'planifier_ot', label:"Générer un OT depuis un avis validé", full:"Génère l'ordre de travail à partir d'un avis technicien déjà validé par le chef d'atelier (Planificateur)"},
+  {id:'lancer_ot', label:"Lancer un OT", full:"Fait passer un OT créé en exécution (OT Créé → OT En cours) — Planificateur ou Chef d'atelier"},
   {id:'controler_qualite_ot', label:"Contrôler la qualité d'un OT", full:"Vérifie la conformité des travaux exécutés, valide ou demande une reprise — étape 6 du circuit (Chef d'atelier)"},
   {id:'cloturer_ot', label:"Clôturer techniquement un OT", full:"Vérifie que toutes les données sont saisies et clôture techniquement l'OT — étape 7 du circuit (Planificateur), + déconfirmer/déclôturer en cas d'erreur"},
   {id:'controler_ot', label:"Suspendre / annuler / transférer", full:"Suspendre, réouvrir, annuler ou transférer un ordre de travail, à toute étape du circuit"},
@@ -292,12 +293,12 @@ function defaultCapaciteChecked(role, capId){
   const admins = ['admin','planificateur'];
   if(capId==='valider_avis') return admins.includes(role) || role==='chef-atelier';
   if(capId==='planifier_ot') return admins.includes(role);
-  if(capId==='autoriser_ot') return role==='admin' || role==='directeur-exploitation';
+  if(capId==='lancer_ot') return admins.includes(role) || role==='chef-atelier';
   if(capId==='controler_qualite_ot') return admins.includes(role) || role==='chef-atelier';
   if(capId==='cloturer_ot') return admins.includes(role);
   if(capId==='controler_ot') return admins.includes(role);
-  if(capId==='budget_ot') return role==='admin';
-  if(capId==='archiver_ot') return role==='admin';
+  if(capId==='budget_ot') return role==='admin' || role==='directeur-exploitation';
+  if(capId==='archiver_ot') return role==='admin' || role==='planificateur';
   if(capId==='valider_conges') return role==='admin' || role==='rh';
   if(capId==='valider_stock') return admins.includes(role) || role==='magasinier';
   return false;
@@ -512,6 +513,7 @@ function normalizeState(){
   if(!Array.isArray(state.objectifsMaintenance) || state.objectifsMaintenance.length===0) state.objectifsMaintenance = ["Disponibilité","Sécurité","Réduction des coûts","Environnement"];
   if(!Array.isArray(state.gammesOperatoires)) state.gammesOperatoires = [];
   if(!Array.isArray(state.cuves)) state.cuves = [];
+  if(!Array.isArray(state.pmHistorique)) state.pmHistorique = [];
   if(!Array.isArray(state.pompes)) state.pompes = [];
   if(!Array.isArray(state.ravitaillements)) state.ravitaillements = [];
   if(!Array.isArray(state.typesCarburant) || state.typesCarburant.length===0) state.typesCarburant = ["Diesel","Essence","Pétrole"];
@@ -521,11 +523,14 @@ function normalizeState(){
   }
   state.fuelLogs.forEach(f=>{ if(!f.statut) f.statut = 'Validé'; }); // pleins déjà existants avant ce module : considérés déjà validés
   state.workOrders.forEach(w=>{
-    if(w.statut==='Ouvert' || w.statut==='Créé') w.statut = 'OT Planifié';
-    else if(w.statut==='Confirmé') w.statut = 'OT Autorisé';
+    if(w.statut==='Ouvert' || w.statut==='Créé') w.statut = 'OT Créé';
+    else if(w.statut==='Confirmé') w.statut = 'OT En cours';
     else if(w.statut==='Confirmé partiel' || w.statut==='En cours') w.statut = 'OT En cours';
     else if(w.statut==='Terminé') w.statut = 'OT Réalisé';
     else if(w.statut==='Clôturé') w.statut = 'OT Clôturé';
+    // Migration des statuts intermédiaires supprimés lors de la simplification du circuit
+    else if(w.statut==='OT Planifié') w.statut = 'OT Créé';
+    else if(w.statut==='OT Autorisé') w.statut = 'OT En cours';
   });
   state.personnel.forEach(p=>{ if(p.soldeConges===undefined || p.soldeConges===null || p.soldeConges==='') p.soldeConges = 26; });
 }
@@ -628,9 +633,9 @@ const uid = () => Math.random().toString(36).slice(2,10);
 
 /* ============ THÈME PERSONNALISABLE ============ */
 const DEFAULT_THEME = {
-  bg:'#EAF4FC', panel:'#FFFFFF', panelR:'#E3F0FB', text:'#16324F', muted:'#5B7A93',
-  accent:'#F2A63C', steel:'#3B82C4', success:'#2E9E5B', danger:'#D9483A',
-  border:'#C9DEEF', borderL:'#A9C7E0', sidebarBg:'#2E6DA6', sidebarBg2:'#1E5488'
+  bg:'#F4F5F7', panel:'#FFFFFF', panelR:'#EEF0F3', text:'#1F2328', muted:'#6B7280',
+  accent:'#E8992E', steel:'#2E6DA6', success:'#2E9E5B', danger:'#D9483A',
+  border:'#D5D8DD', borderL:'#B9BFC7', sidebarBg:'#2E6DA6', sidebarBg2:'#1E5488'
 };
 const THEME_LABELS = {
   bg:'Fond général', panel:'Panneaux', panelR:'Panneaux (survol)', text:'Texte principal', muted:'Texte secondaire',
@@ -696,8 +701,8 @@ function drawDonut(canvas, segments){
 }
 const DEFAULT_EQUIP_TYPES = ["Pelleteuse","Tombereau","Foreuse","Groupe électrogène","Ligne de production","Machine industrielle","Convoyeur","Emballeuse","Autre"];
 const STATUTS = ["Opérationnel","En maintenance","En panne","À l'arrêt"];
-const WO_STATUTS = ["OT Généré","OT Planifié","OT Autorisé","OT En cours","OT en reprise","OT Réalisé","OT Validé Atelier","Suspendu","OT Clôturé","Annulé"];
-const WO_STATUTS_ACTIFS = ["OT Généré","OT Planifié","OT Autorisé","OT En cours","OT en reprise","OT Réalisé","OT Validé Atelier","Suspendu"]; // comptent comme "ouverts" dans les KPI
+const WO_STATUTS = ["OT Créé","OT En cours","OT en reprise","OT Réalisé","OT Validé Atelier","Suspendu","OT Clôturé","Annulé"];
+const WO_STATUTS_ACTIFS = ["OT Créé","OT En cours","OT en reprise","OT Réalisé","OT Validé Atelier","Suspendu"]; // comptent comme "ouverts" dans les KPI
 const WO_PRIORITES = ["Basse","Normale","Haute","Urgente"];
 const SITES = ["CIGRAC","Usine"];
 const LOCATION_TYPES = ["Site","Atelier","Ligne","Machine"];
@@ -788,7 +793,7 @@ let state = { fleet: [], workOrders: [], fuelLogs: [], parts: [], pmPlans: [], l
   typesStrategieMaintenance: ["Préventif systématique","Conditionnel","Prédictif","Correctif"],
   objectifsMaintenance: ["Disponibilité","Sécurité","Réduction des coûts","Environnement"],
   gammesOperatoires: [],
-  cuves: [], pompes: [], ravitaillements: [],
+  cuves: [], pompes: [], ravitaillements: [], pmHistorique: [],
   typesCarburant: ["Diesel","Essence","Pétrole"],
   rolesApplicatifs: [
     {id:'admin', label:'Administrateur'}, {id:'planificateur', label:'Planificateur maintenance'},
@@ -813,11 +818,11 @@ function logAudit(action){
   if(state.auditLog.length>500) state.auditLog.length = 500;
 }
 function woStatutColor(statut){
-  return { 'OT Généré':'var(--muted)', 'OT Planifié':'var(--steel)', 'OT Autorisé':'var(--steel)', 'OT En cours':'var(--accent)', 'OT en reprise':'var(--danger)', 'OT Réalisé':'var(--steel)', 'OT Validé Atelier':'var(--steel)', 'Suspendu':'var(--accent)', 'OT Clôturé':'var(--success)', 'Annulé':'var(--danger)' }[statut] || 'var(--muted)';
+  return { 'OT Créé':'var(--muted)', 'OT En cours':'var(--accent)', 'OT en reprise':'var(--danger)', 'OT Réalisé':'var(--steel)', 'OT Validé Atelier':'var(--steel)', 'Suspendu':'var(--accent)', 'OT Clôturé':'var(--success)', 'Annulé':'var(--danger)' }[statut] || 'var(--muted)';
 }
 function woStatusBadges(w){
   // Reproduit l'esprit du bandeau "statut système" SAP (LANC/DANP/DELN...) à partir de l'état réel de l'OT
-  const statutColors = { 'OT Généré':'var(--muted)', 'OT Planifié':'var(--steel)', 'OT Autorisé':'var(--steel)', 'OT En cours':'var(--accent)', 'OT en reprise':'var(--danger)', 'OT Réalisé':'var(--steel)', 'OT Validé Atelier':'var(--steel)', 'Suspendu':'var(--accent)', 'OT Clôturé':'var(--success)', 'Annulé':'var(--danger)' };
+  const statutColors = { 'OT Créé':'var(--muted)', 'OT En cours':'var(--accent)', 'OT en reprise':'var(--danger)', 'OT Réalisé':'var(--steel)', 'OT Validé Atelier':'var(--steel)', 'Suspendu':'var(--accent)', 'OT Clôturé':'var(--success)', 'Annulé':'var(--danger)' };
   const tags = [{t: w.statut.toUpperCase(), c: statutColors[w.statut]||'var(--muted)'}];
   if(w.operations && w.operations.length) tags.push({t:'OPÉR. SAISIES', c:'var(--steel)'});
   if(w.piecesUtilisees && w.piecesUtilisees.length) tags.push({t:'COMPOSANTS', c:'var(--steel)'});
@@ -1134,7 +1139,7 @@ function drawDashboardCharts(){
   const danger = getComputedStyle(document.documentElement).getPropertyValue('--danger').trim() || '#E5533C';
   drawBarChart(document.getElementById('chart-maint-cost'), months.map(monthLabel), maintByMonth, accent);
   drawBarChart(document.getElementById('chart-fuel-cost'), months.map(monthLabel), fuelByMonth, steel);
-  const woColors = { 'OT Généré':muted, 'OT Planifié':steel, 'OT Autorisé':steel, 'OT En cours':accent, 'OT en reprise':danger, 'OT Réalisé':steel, 'OT Validé Atelier':steel, 'Suspendu':accent, 'OT Clôturé':success, 'Annulé':danger };
+  const woColors = { 'OT Créé':muted, 'OT En cours':accent, 'OT en reprise':danger, 'OT Réalisé':steel, 'OT Validé Atelier':steel, 'Suspendu':accent, 'OT Clôturé':success, 'Annulé':danger };
   const woFiltered = state.workOrders.filter(w=>matchesFilter(w.equipementId));
   drawDonut(document.getElementById('chart-wo-status'), WO_STATUTS.map(s=>({label:s, value: woFiltered.filter(w=>w.statut===s).length || 0.0001, color: woColors[s]})));
   const persColors = [accent, steel, success];
@@ -1160,7 +1165,8 @@ function viewDashboard(){
   state.plantEquipment.filter(e=>e.statut==="En panne").forEach(e=>alerts.push({lvl:'danger',text:`${e.code} — ${e.nom} (usine) est en panne`}));
   state.parts.filter(p=>Number(p.quantite)<=Number(p.seuil)).forEach(p=>alerts.push({lvl:'accent',text:`Stock bas : ${p.nom} (${p.quantite} restant)`}));
   const now = new Date();
-  state.pmPlans.filter(p=>pmStatus(p,em).urgent).forEach(p=>alerts.push({lvl:'accent',text:`Entretien à échéance : ${em[p.equipementId]?.code||'?'} — ${p.tache} (${pmStatus(p,em).label})`}));
+  state.pmPlans.filter(p=>pmStatus(p,em).urgent && !p.otGenereId).forEach(p=>alerts.push({lvl:'accent',text:`Entretien à échéance : ${em[p.equipementId]?.code||'?'} — ${p.tache} (${pmStatus(p,em).label})`}));
+  state.pmPlans.filter(p=>p.otGenereId && pmSuiviStatut(p)==='Généré').forEach(p=>{ const ot=state.workOrders.find(w=>w.id===p.otGenereId); alerts.push({lvl:'steel',text:`Préventif généré automatiquement : ${ot?ot.numero:'?'} — ${em[p.equipementId]?.code||'?'} (${p.tache}) — à planifier`}); });
   state.notifications.filter(n=>n.statut==="Nouvelle" && n.priorite==="Urgente").forEach(n=>alerts.push({lvl:'danger',text:`Notification urgente : ${em[n.equipementId]?.code||'?'} — ${n.description}`}));
   state.measuringPoints.filter(m=>m.seuilMax!=='' && m.dernierReleve!=='' && Number(m.dernierReleve)>Number(m.seuilMax)).forEach(m=>alerts.push({lvl:'accent',text:`Mesure hors seuil : ${em[m.equipementId]?.code||'?'} — ${m.nom} (${m.dernierReleve})`}));
   const recentWO = [...state.workOrders].sort((a,b)=>(b.dateCreation||'').localeCompare(a.dateCreation||'')).slice(0,6);
@@ -1776,8 +1782,8 @@ function fmtDuree(mins){
 }
 function blankWO(){
   return { id:null, numero:null, categorieEquipement:'', equipementId:'', type:'Panne / Correctif',
-    typeTravail: state.typesTravail[0], poste: state.postes[0], titre:'', description:'', priorite:'Normale', statut:'OT Planifié',
-    dateCreation:new Date().toISOString().slice(0,10), dateDebut:new Date().toISOString().slice(0,10), dateFin:'',
+    typeTravail: state.typesTravail[0], poste: state.postes[0], titre:'', description:'', priorite:'Normale', statut:'OT Créé',
+    dateCreation:new Date().toISOString().slice(0,10), dateDebut:new Date().toISOString().slice(0,10), dateFin:'', heureDebut:'', heureFin:'',
     technicien:'', cout:0, operations:[], piecesUtilisees:[],
     permisTravail:false, consignation:'', budgetApprouve:false, approbateurBudget:'', clotureFinanciere:false, clotureFinancierePar:'', documents:[],
     statutAvantSuspension:null, archive:false, motifAnnulation:'' };
@@ -1808,14 +1814,13 @@ function viewWOEdit(){
   const personnelDuPoste = state.personnel.filter(p=>p.statut==='Actif' && (!w.poste || p.poste===w.poste));
 
   const isTechEdit = currentUser && currentUser.role==='technicien';
-  const canPlanifierOT = currentUser && hasCapacite('planifier_ot', currentUser.role==='planificateur');
-  const canAutoriserOT = currentUser && hasCapacite('autoriser_ot', currentUser.role==='directeur-exploitation');
+  const canLancerOT = currentUser && hasCapacite('lancer_ot', currentUser.role==='planificateur' || currentUser.role==='chef-atelier');
   const canControlerQualiteOT = currentUser && hasCapacite('controler_qualite_ot', currentUser.role==='chef-atelier');
   const canControlOT = currentUser && hasCapacite('controler_ot', currentUser.role==='planificateur');
   const canCloseOT = currentUser && hasCapacite('cloturer_ot', currentUser.role==='planificateur');
   const canBudgetOT = currentUser && hasCapacite('budget_ot', false);
   // Conservé pour compat : utilisé pour le calcul global de canExecute
-  const canSuperviseEdit = canPlanifierOT || canAutoriserOT || canControlerQualiteOT || canControlOT || canCloseOT;
+  const canSuperviseEdit = canLancerOT || canControlerQualiteOT || canControlOT || canCloseOT;
 
   const hasBudgetTab = !woIsNew && Number(w.cout)>0;
   const woTabs = [
@@ -1834,11 +1839,8 @@ function viewWOEdit(){
   return `
   <div class="wo-toolbar wrapwrap">
     <button class="btn btn-ghost" style="border-color:var(--borderL);" id="wo-back">${ICONS.close} Retour à la liste</button>
-    ${!woIsNew && canPlanifierOT && s==='OT Généré' ? `<button class="btn btn-ghost" style="color:var(--steel);border-color:var(--steel);" id="wo-plan">${ICONS.check} Planifier</button>` : ''}
-    ${!woIsNew && canAutoriserOT && s==='OT Planifié' ? `<button class="btn btn-ghost" style="color:var(--steel);border-color:var(--steel);" id="wo-authorize">${ICONS.check} Autoriser</button>` : ''}
-    ${!woIsNew && canAutoriserOT && s==='OT Planifié' ? `<button class="btn btn-ghost" style="color:var(--danger);border-color:var(--danger);" id="wo-authorize-refuse">${ICONS.close} Refuser l'autorisation</button>` : ''}
-    ${!woIsNew && canExecute && s==='OT Autorisé' ? `<button class="btn btn-ghost" style="color:var(--accent);border-color:var(--accent);" id="wo-launch">${ICONS.activity} Lancer / Exécuter</button>` : ''}
-    ${canExecute && s==='OT En cours' ? `<button class="btn btn-ghost" style="color:var(--steel);border-color:var(--steel);" id="wo-finish">${ICONS.check} Marquer terminé</button>` : ''}
+    ${!woIsNew && canLancerOT && s==='OT Créé' ? `<button class="btn btn-ghost" style="color:var(--accent);border-color:var(--accent);" id="wo-launch">${ICONS.activity} Lancer l'OT</button>` : ''}
+    ${canExecute && s==='OT En cours' ? `<button class="btn btn-ghost" style="color:var(--steel);border-color:var(--steel);" id="wo-finish">${ICONS.check} Valider les travaux</button>` : ''}
     ${!woIsNew && canExecute && s==='OT en reprise' ? `<button class="btn btn-ghost" style="color:var(--accent);border-color:var(--accent);" id="wo-resume">${ICONS.activity} Relancer l'exécution</button>` : ''}
     ${!woIsNew && canControlerQualiteOT && s==='OT Réalisé' ? `<button class="btn btn-ghost" style="color:var(--success);border-color:var(--success);" id="wo-quality-ok">${ICONS.check} Valider la qualité</button>` : ''}
     ${!woIsNew && canControlerQualiteOT && (s==='OT Réalisé'||s==='OT Validé Atelier') ? `<button class="btn btn-ghost" style="color:var(--danger);border-color:var(--danger);" id="wo-quality-rework">${ICONS.close} Demander une reprise</button>` : ''}
@@ -1887,12 +1889,15 @@ function viewWOEdit(){
       <label class="field"><span>Priorité</span><select id="wo-f-priorite">${state.woPriorites.map(p=>`<option ${w.priorite===p?'selected':''}>${p}</option>`).join('')}</select></label>
       <label class="field"><span>Statut</span><select id="wo-f-statut" disabled title="Le statut se change uniquement via les boutons d'action en haut de page">${WO_STATUTS.map(s=>`<option ${w.statut===s?'selected':''}>${s}</option>`).join('')}</select></label>
       <label class="field"><span>Date début</span><input type="date" id="wo-f-debut" value="${w.dateDebut||w.dateCreation||''}"/></label>
+      <label class="field"><span>Heure début</span><input type="time" id="wo-f-heureDebut" value="${w.heureDebut||''}"/></label>
       <label class="field"><span>Date fin</span><input type="date" id="wo-f-fin" value="${w.dateFin||''}"/></label>
+      <label class="field"><span>Heure fin</span><input type="time" id="wo-f-heureFin" value="${w.heureFin||''}"/></label>
       <label class="field"><span>Responsable OT <span style="color:var(--muted);font-weight:400;">(du corps de métier choisi)</span></span>
         <input id="wo-f-tech" list="wo-personnel-list" value="${esc(w.technicien)}" placeholder="Choisir ou saisir un nom"/>
         <datalist id="wo-personnel-list">${personnelDuPoste.map(p=>`<option value="${esc(p.nom)}">${esc(p.poste)}</option>`).join('')}</datalist>
       </label>
       <label class="field"><span>Coût (FCFA)</span><input type="number" id="wo-f-cout" value="${w.cout||0}"/></label>
+      <label class="field span2"><span>Gamme opératoire <span style="color:var(--muted);font-weight:400;">(optionnel — permet de charger ses tâches dans l'onglet Opérations)</span></span><select id="wo-f-gamme"><option value="">— Aucune —</option>${state.gammesOperatoires.map(g=>`<option value="${g.id}" ${w.gammeId===g.id?'selected':''}>${esc(g.nom)}</option>`).join('')}</select></label>
     </div>
   </div>` : ''}
 
@@ -1949,6 +1954,10 @@ function viewWOEdit(){
   <div class="plate p16" style="margin-bottom:16px;">
     <h3 class="oswald" style="text-transform:uppercase;font-size:13px;margin:0 0 4px;color:var(--muted);">Opérations effectuées</h3>
     <p style="font-size:11px;color:var(--muted);margin:0 0 12px;">Une tâche peut réunir plusieurs corps de métier — ajoute un intervenant par poste, avec ses heures.</p>
+    ${(()=>{ const gamme = w.gammeId ? state.gammesOperatoires.find(g=>g.id===w.gammeId) : null; const taches = gammeTaches(gamme);
+      return gamme && taches.length>0 ? `<div class="row" style="margin-bottom:14px;">
+        <button class="btn btn-ghost" id="wo-load-gamme-taches" type="button" style="color:var(--steel);border-color:var(--steel);">${ICONS.layers} Charger les ${taches.length} tâche(s) de la gamme « ${esc(gamme.nom)} »</button>
+      </div>` : ''; })()}
     <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
       ${w.operations.length===0?`<span style="font-size:12px;color:var(--muted);">Aucune tâche ajoutée.</span>`:
       w.operations.map((op,oi)=>{
@@ -1956,12 +1965,16 @@ function viewWOEdit(){
         const posteSelected = woOpFormOpen[op.id+'_poste'] || state.postes[0];
         const personnelForPoste = state.personnel.filter(p=>p.statut==='Actif' && p.poste===posteSelected);
         return `
-      <div class="card-item" style="padding:10px 12px;${op.confirme?'border-color:var(--success);':''}">
+      <div class="card-item" style="padding:10px 12px;${op.confirme?'border-color:var(--success);background:rgba(76,175,109,.06);':''}">
         <div class="between" style="margin-bottom:8px;">
-          <span style="font-size:13px;font-weight:500;">${esc(op.description)} ${op.confirme?`<span class="badge" style="color:var(--success);border-color:var(--success);margin-left:6px;">${ICONS.check} Confirmée</span>`:''}</span>
+          <label style="display:flex;align-items:center;gap:9px;cursor:pointer;font-size:13px;font-weight:500;">
+            <input type="checkbox" data-wo-op-check="${oi}" ${op.confirme?'checked':''} style="width:17px;height:17px;flex-shrink:0;"/>
+            <span>${esc(op.description)}</span>
+            ${op.confirme?`<span class="badge" style="color:var(--success);border-color:var(--success);">${ICONS.check} Fait${op.confirmePar?' — '+esc(op.confirmePar):''}</span>`:''}
+          </label>
           <button class="icon-btn" data-wo-op-del="${oi}">${ICONS.trash}</button>
         </div>
-        ${op.affectations.length===0?`<span style="font-size:11px;color:var(--muted);">Aucun intervenant affecté.</span>`:
+        ${op.affectations.length===0?`<span style="font-size:11px;color:var(--muted);">Aucun technicien affecté${op.confirme?' — ajoutes-en un pour préciser qui a réalisé la tâche.':'.'}</span>`:
         `<div style="display:flex;flex-direction:column;gap:4px;margin-bottom:8px;">
           ${op.affectations.map((af,ai)=>{
             const mins = af.dureeMin!=null ? af.dureeMin : dureeAffectation(af);
@@ -2058,7 +2071,9 @@ function wireWOEditor(){
     w.description = val('wo-f-desc', w.description);
     w.priorite = val('wo-f-priorite', w.priorite);
     w.dateDebut = val('wo-f-debut', w.dateDebut);
+    w.heureDebut = val('wo-f-heureDebut', w.heureDebut);
     w.dateFin = val('wo-f-fin', w.dateFin);
+    w.heureFin = val('wo-f-heureFin', w.heureFin);
     w.technicien = val('wo-f-tech', w.technicien);
     w.cout = val('wo-f-cout', w.cout);
     w.type = val('wo-f-type', w.type);
@@ -2086,23 +2101,9 @@ function wireWOEditor(){
       if(newStatut==='OT Clôturé' || newStatut==='Annulé') eq.statut='Opérationnel';
       else eq.statut='En maintenance';
     }
+    if(newStatut==='OT Clôturé') pmOnClosure(w);
     logAudit('OT '+w.numero+' → '+newStatut); persist(); toast('Statut : '+newStatut); render();
   }
-  const planBtn = document.getElementById('wo-plan');
-  if(planBtn) planBtn.addEventListener('click', ()=>{
-    if(!w.technicien){ alert("Affecte un responsable (onglet Données générales) avant de planifier l'OT."); return; }
-    confirmModal('Planifier '+w.numero+' ? Vérifie que les gammes opératoires et les ressources sont bien renseignées.', ()=>quickTransition('OT Planifié'));
-  });
-  const authorizeBtn = document.getElementById('wo-authorize');
-  if(authorizeBtn) authorizeBtn.addEventListener('click', ()=>{
-    confirmModal('Autoriser le lancement de '+w.numero+' ? Vérifie la cohérence budgétaire et opérationnelle avant de confirmer.', ()=>quickTransition('OT Autorisé', { autorisePar: currentUser?currentUser.nomComplet:'', dateAutorisation: new Date().toISOString().slice(0,10) }));
-  });
-  const authorizeRefuseBtn = document.getElementById('wo-authorize-refuse');
-  if(authorizeRefuseBtn) authorizeRefuseBtn.addEventListener('click', ()=>{
-    promptModal('Refuser l\'autorisation de '+w.numero, 'Motif du refus', (motif)=>{
-      quickTransition('OT Généré', { motifRefusAutorisation: motif });
-    }, {textarea:true});
-  });
   const deconfirmBtn = document.getElementById('wo-deconfirm');
   if(deconfirmBtn) deconfirmBtn.addEventListener('click', ()=>openDeconfirmPanel(w));
   const workflowBtn = document.getElementById('wo-workflow');
@@ -2110,13 +2111,23 @@ function wireWOEditor(){
   const printPdfBtn = document.getElementById('wo-print-pdf');
   if(printPdfBtn) printPdfBtn.addEventListener('click', ()=>exportSingleWOToPDF(w));
   const launchBtn = document.getElementById('wo-launch');
-  if(launchBtn) launchBtn.addEventListener('click', ()=>quickTransition('OT En cours'));
+  if(launchBtn) launchBtn.addEventListener('click', ()=>{
+    if(!w.technicien){ alert("Affecte un responsable (onglet Données générales) avant de lancer l'OT."); return; }
+    confirmModal('Lancer '+w.numero+' ? Il passera immédiatement chez le technicien pour exécution.', ()=>quickTransition('OT En cours'));
+  });
   const resumeBtn = document.getElementById('wo-resume');
   if(resumeBtn) resumeBtn.addEventListener('click', ()=>quickTransition('OT En cours'));
   const finishBtn = document.getElementById('wo-finish');
   if(finishBtn) finishBtn.addEventListener('click', ()=>{
-    if(!w.operations || w.operations.length===0){ alert("Ajoute au moins une opération avec ses intervenants dans l'onglet \"Opérations\" avant de marquer l'OT comme terminé — c'est là que tu enregistres le travail réellement effectué."); return; }
-    openConfirmationPanel(w);
+    if(!w.operations || w.operations.length===0){ alert("Ajoute au moins une opération dans l'onglet \"Opérations\" avant de valider les travaux — c'est là que tu enregistres le travail réellement effectué."); return; }
+    const nonFaites = w.operations.filter(o=>!o.confirme);
+    if(nonFaites.length>0){
+      confirmModal(nonFaites.length+" tâche(s) non cochée(s) sur cet OT :\n\n"+nonFaites.map(o=>'• '+o.description).join('\n')+"\n\nCertaines tâches de la gamme ne s'appliquent peut-être pas à cette intervention précise. Valider les travaux quand même ?", ()=>{
+        quickTransition('OT Réalisé');
+      });
+      return;
+    }
+    quickTransition('OT Réalisé');
   });
   const qualityOkBtn = document.getElementById('wo-quality-ok');
   if(qualityOkBtn) qualityOkBtn.addEventListener('click', ()=>{
@@ -2227,6 +2238,42 @@ function wireWOEditor(){
     }, {danger:true, okLabel:'Supprimer'});
   }));
 
+  const loadGammeTaches = document.getElementById('wo-load-gamme-taches');
+  if(loadGammeTaches) loadGammeTaches.addEventListener('click', ()=>{
+    const gamme = w.gammeId ? state.gammesOperatoires.find(g=>g.id===w.gammeId) : null;
+    if(!gamme) return;
+    const taches = gammeTaches(gamme);
+    const dejaPresentes = new Set(w.operations.map(o=>o.description.trim().toLowerCase()));
+    const nouvelles = taches.filter(t=>!dejaPresentes.has(t.trim().toLowerCase()));
+    if(nouvelles.length===0){ toast('Toutes les tâches de cette gamme sont déjà dans la liste'); return; }
+    nouvelles.forEach(t=>w.operations.push({id:uid(), description:t, affectations:[], confirme:false}));
+    render(); toast(nouvelles.length+' tâche(s) ajoutée(s) depuis la gamme');
+  });
+  document.querySelectorAll('[data-wo-op-check]').forEach(cb=>cb.addEventListener('change', ()=>{
+    const oi = Number(cb.dataset.woOpCheck);
+    const op = w.operations[oi];
+    if(!op) return;
+    if(cb.checked){
+      (op.affectations||[]).forEach(af=>{ af.dureeMin = dureeAffectation(af); });
+      op.confirme = true;
+      op.confirmePar = currentUser ? currentUser.nomComplet : '';
+      op.dateConfirmation = new Date().toISOString();
+      recomputeConfirmStatus(w);
+      syncWOToState(w);
+      logAudit('OT '+w.numero+' — opération "'+op.description+'" confirmée par '+op.confirmePar);
+      persist(); toast('Tâche cochée — '+(op.affectations&&op.affectations.length?'':'ajoute un technicien ci-dessous'));
+      if(!op.affectations || op.affectations.length===0){ woOpFormOpen[op.id] = true; woOpFormOpen[op.id+'_poste'] = state.postes[0]; }
+      render();
+    } else {
+      confirmModal('Décocher la tâche "'+op.description+'" ?', ()=>{
+        op.confirme = false; op.confirmePar=''; op.dateConfirmation=null;
+        recomputeConfirmStatus(w);
+        syncWOToState(w);
+        logAudit('OT '+w.numero+' — tâche décochée : "'+op.description+'" par '+(currentUser?currentUser.nomComplet:''));
+        persist(); toast('Tâche décochée'); render();
+      }, {onCancel: ()=>{ cb.checked = true; }});
+    }
+  }));
   const opAdd = document.getElementById('wo-op-add');
   if(opAdd) opAdd.addEventListener('click', ()=>{
     const input = document.getElementById('wo-op-input');
@@ -2345,9 +2392,12 @@ function wireWOEditor(){
     w.priorite = val('wo-f-priorite', w.priorite);
     w.statut = val('wo-f-statut', w.statut);
     w.dateDebut = val('wo-f-debut', w.dateDebut);
+    w.heureDebut = val('wo-f-heureDebut', w.heureDebut);
     w.dateFin = val('wo-f-fin', w.dateFin);
+    w.heureFin = val('wo-f-heureFin', w.heureFin);
     w.technicien = val('wo-f-tech', w.technicien);
     w.cout = Number(val('wo-f-cout', w.cout))||0;
+    w.gammeId = val('wo-f-gamme', w.gammeId);
     const permisEl = document.getElementById('wo-f-permis'); if(permisEl) w.permisTravail = permisEl.checked;
     const consigEl = document.getElementById('wo-f-consignation'); if(consigEl) w.consignation = consigEl.value;
     w.normeHSE = val('wo-f-norme', w.normeHSE);
@@ -2386,7 +2436,7 @@ function wireWOEditor(){
       if(idx>-1) state.workOrders[idx] = w;
       if(eqForStatus){
         if(w.statut==='OT Clôturé' || w.statut==='Annulé') eqForStatus.statut='Opérationnel';
-        else if(w.statut!=='OT Généré' || eqForStatus.statut!=='En panne') eqForStatus.statut='En maintenance';
+        else if(w.statut!=='OT Créé' || eqForStatus.statut!=='En panne') eqForStatus.statut='En maintenance';
       }
       persist(); render(); toast('Ordre de travail mis à jour');
     }
@@ -2413,6 +2463,129 @@ function pmStatus(p, em){
   const urgent = daysLeft!==null && daysLeft<=7;
   const label = p.prochaine ? `Échéance : ${p.prochaine}${daysLeft!==null?` (${daysLeft}j)`:''}` : 'Non planifié';
   return { urgent, label };
+}
+function pmNiveau(restant, seuilUrgent){
+  if(restant<=0) return 'depasse';
+  if(restant<=seuilUrgent) return 'proche';
+  return 'ok';
+}
+function pmNiveauColor(niveau){
+  return { depasse:'var(--danger)', proche:'var(--accent)', ok:'var(--success)' }[niveau] || 'var(--muted)';
+}
+function pmNiveauIcon(niveau){
+  return { depasse:'●', proche:'▲', ok:'●' }[niveau] || '●';
+}
+function pmEstimation(p, em){
+  const st = pmStatus(p, em);
+  let estimatedDate = null, avgLabel = '', natureDerniere=null, natureProchaine=null, joursRestants=null, resteValeur=null, niveau='ok', unite='';
+  if(p.type==='Heures' || p.type==='Kilométrage'){
+    const eq = em[p.equipementId];
+    unite = p.type==='Heures' ? 'h' : 'km';
+    const valeurActuelle = eq ? Number(p.type==='Heures' ? eq.heures : eq.km) || 0 : 0;
+    const intervalle = Number(p.intervalle||0);
+    const prochaineValeur = Number(p.derniereValeur||0) + intervalle;
+    resteValeur = prochaineValeur - valeurActuelle;
+    const seuilUrgent = p.type==='Heures' ? 20 : 200;
+    niveau = pmNiveau(resteValeur, seuilUrgent);
+    if(intervalle>0){
+      natureDerniere = Math.round(Number(p.derniereValeur||0)/intervalle)*intervalle;
+      natureProchaine = natureDerniere + intervalle;
+    }
+    if(p.derniere){
+      const joursEcoules = Math.max(1, Math.round((new Date() - new Date(p.derniere))/864e5));
+      const avgPerDay = (valeurActuelle - Number(p.derniereValeur||0)) / joursEcoules;
+      if(avgPerDay > 0){
+        joursRestants = Math.round(resteValeur/avgPerDay);
+        const d = new Date(); d.setDate(d.getDate()+joursRestants);
+        estimatedDate = d.toISOString().slice(0,10);
+        avgLabel = `≈ ${avgPerDay.toFixed(1)} ${unite}/j`;
+      }
+    }
+    if(!estimatedDate) avgLabel = 'Historique insuffisant pour estimer une date';
+  } else {
+    estimatedDate = p.prochaine || null;
+    if(p.prochaine) joursRestants = Math.round((new Date(p.prochaine)-new Date())/864e5);
+    niveau = joursRestants!==null ? pmNiveau(joursRestants, 7) : 'ok';
+  }
+  return { ...st, estimatedDate, avgLabel, natureDerniere, natureProchaine, joursRestants, resteValeur, niveau, unite };
+}
+function pmSuiviStatut(p){
+  if(!p.otGenereId) return 'À venir';
+  const ot = state.workOrders.find(w=>w.id===p.otGenereId);
+  if(!ot) return 'À venir';
+  if(ot.statut==='OT Clôturé') return 'Clôturé';
+  if(ot.statut==='OT Créé') return 'Généré';
+  return 'En cours';
+}
+function pmSuiviColor(s){
+  return { 'À venir':'var(--muted)', 'Généré':'var(--steel)', 'En cours':'var(--accent)', 'Clôturé':'var(--success)' }[s] || 'var(--muted)';
+}
+function gammeTaches(gamme){
+  if(!gamme || !gamme.procedure) return [];
+  return gamme.procedure.split('\n')
+    .map(l=>l.replace(/^\s*[\d]+[\.\)]\s*/,'').trim()) // retire une numérotation type "1. " ou "1) " en début de ligne
+    .filter(l=>l.length>0);
+}
+function checkAutoGeneratePM(){
+  // Génère automatiquement un OT préventif J-2 avant l'échéance estimée, si pas déjà fait pour ce cycle
+  const em = equipMap();
+  let changed = false;
+  state.pmPlans.forEach(p=>{
+    if(p.otGenereId){
+      const ot = state.workOrders.find(w=>w.id===p.otGenereId);
+      if(ot) return; // déjà généré, cycle en cours
+      p.otGenereId = null; // OT introuvable (supprimé) : on autorise une nouvelle génération
+    }
+    const est = pmEstimation(p, em);
+    if(!est.estimatedDate) return;
+    const joursAvant = Math.round((new Date(est.estimatedDate) - new Date())/864e5);
+    if(joursAvant <= 2){
+      const eq = em[p.equipementId];
+      const gamme = p.gammeId ? state.gammesOperatoires.find(g=>g.id===p.gammeId) : null;
+      state.woCounter = (state.woCounter||0)+1;
+      const inFleet = state.fleet.some(e=>e.id===p.equipementId);
+      const wo = {
+        ...blankWO(),
+        id: uid(), numero:'OT-'+String(state.woCounter).padStart(4,'0'), equipementId:p.equipementId,
+        categorieEquipement: inFleet?'Flotte':'Usine', type:'Préventif',
+        typeTravail: 'Inspection', poste: state.postes[0], titre: p.tache,
+        description: gamme ? gamme.description : '', statut:'OT Créé',
+        dateCreation: new Date().toISOString().slice(0,10), dateDebut: est.estimatedDate, dateFin:'',
+        gammeId: p.gammeId||'', origine:'Préventif automatique (J-2)',
+        operations: gamme ? gammeTaches(gamme).map(t=>({id:uid(), description:t, affectations:[], confirme:false})) : []
+      };
+      state.workOrders.push(wo);
+      p.otGenereId = wo.id;
+      if(eq) eq.statut = eq.statut==='En panne' ? eq.statut : 'En maintenance';
+      logAudit('Préventif : OT '+wo.numero+' généré automatiquement pour '+(eq?eq.code:'?')+' — échéance estimée '+est.estimatedDate);
+      changed = true;
+    }
+  });
+  if(changed) persist();
+}
+function pmOnClosure(ot){
+  // Boucle fermée : quand l'OT lié à un plan préventif est clôturé, réinitialise le compteur et archive l'historique
+  const p = state.pmPlans.find(x=>x.otGenereId===ot.id);
+  if(!p) return;
+  const em = equipMap();
+  const eq = em[p.equipementId];
+  state.pmHistorique = state.pmHistorique || [];
+  state.pmHistorique.push({
+    id: uid(), pmPlanId: p.id, equipementId: p.equipementId, tache: p.tache, otId: ot.id, otNumero: ot.numero,
+    date: ot.dateFin || new Date().toISOString().slice(0,10),
+    valeur: (p.type==='Heures'||p.type==='Kilométrage') && eq ? Number(p.type==='Heures'?eq.heures:eq.km)||0 : null,
+    unite: p.type==='Heures'?'h':p.type==='Kilométrage'?'km':'date', cout: Number(ot.cout||0)
+  });
+  if(p.type==='Heures' || p.type==='Kilométrage'){
+    p.derniereValeur = eq ? Number(p.type==='Heures'?eq.heures:eq.km)||0 : p.derniereValeur;
+    p.derniere = ot.dateFin || new Date().toISOString().slice(0,10);
+  } else {
+    p.derniere = ot.dateFin || new Date().toISOString().slice(0,10);
+    const d = new Date(p.derniere); d.setDate(d.getDate()+Number(p.frequenceJours||90));
+    p.prochaine = d.toISOString().slice(0,10);
+  }
+  p.otGenereId = null;
+  logAudit('Préventif : compteur réinitialisé pour '+p.tache+' ('+(eq?eq.code:'?')+') après clôture de '+ot.numero);
 }
 /* ============ GAMMES OPÉRATOIRES ============ */
 function gammeForm(g){
@@ -2460,25 +2633,55 @@ function viewGammes(){
   </div>`}`;
 }
 
+let pmViewMode = 'liste';
 function viewPM(){
   const em = equipMap();
-  const sorted = [...state.pmPlans].sort((a,b)=> (pmStatus(a,em).urgent===pmStatus(b,em).urgent)?0:(pmStatus(a,em).urgent?-1:1));
+  const withEst = state.pmPlans.map(p=>({p, est:pmEstimation(p,em), suivi:pmSuiviStatut(p)}));
+  const sorted = pmViewMode==='suivi'
+    ? [...withEst].sort((a,b)=>(a.est.estimatedDate||'9999').localeCompare(b.est.estimatedDate||'9999'))
+    : [...withEst].sort((a,b)=>{ const order={depasse:0,proche:1,ok:2}; return order[a.est.niveau]-order[b.est.niveau]; });
   return `
   <div class="headrow">
-    <div><h1>Maintenance préventive</h1><p class="subtitle" style="margin:0;">Planification par date ou par compteur (heures/km)</p></div>
-    <button class="btn btn-accent" data-open-pm="new">${ICONS.plus} Nouveau plan</button>
+    <div><h1>Maintenance préventive</h1><p class="subtitle" style="margin:0;">Planification par date ou par compteur (heures/km) — estimation prédictive et génération automatique</p></div>
+    <div class="row">
+      <div class="row" style="background:var(--panelR);border-radius:8px;padding:2px;">
+        <button class="btn ${pmViewMode==='liste'?'btn-accent':'btn-ghost'}" style="padding:6px 12px;font-size:12px;" id="pm-mode-liste" type="button">Liste</button>
+        <button class="btn ${pmViewMode==='suivi'?'btn-accent':'btn-ghost'}" style="padding:6px 12px;font-size:12px;" id="pm-mode-suivi" type="button">Suivi global</button>
+      </div>
+      <button class="btn btn-ghost" id="pm-export-btn">${ICONS.receipt} Exporter Excel</button>
+      <button class="btn btn-ghost" id="pm-import-btn">${ICONS.plus} Importer Excel</button>
+      <input type="file" id="pm-import-file" accept=".xlsx,.xls" style="display:none;"/>
+      <button class="btn btn-accent" data-open-pm="new">${ICONS.plus} Nouveau plan</button>
+    </div>
   </div>
+  <p style="font-size:11px;color:var(--muted);margin:-4px 0 16px;">L'export/import gère aussi les compteurs (heures/km) de chaque engin et le rattachement aux gammes opératoires — pratique pour créer ou mettre à jour plusieurs plans d'un coup.</p>
   ${sorted.length===0?`<div class="plate p16"><div class="empty">${ICONS.calendar}<span>Aucun plan préventif défini.</span></div></div>`:
-  `<div style="display:flex;flex-direction:column;gap:8px;">
-  ${sorted.map(p=>{
-    const st = pmStatus(p, em);
+  pmViewMode==='suivi' ? `
+  <div class="plate" style="overflow:hidden;">
+  <table><thead><tr><th></th><th>Échéance estimée</th><th class="right">Reste</th><th class="right">Jours</th><th>Équipement</th><th>Tâche</th><th>Repère (dernier → prochain)</th><th>Statut de suivi</th><th></th></tr></thead>
+  <tbody>
+  ${sorted.map(({p,est,suivi})=>{ const ot = p.otGenereId ? state.workOrders.find(w=>w.id===p.otGenereId) : null;
+    return `<tr class="legend-clickable" data-open-pm-row="${p.id}">
+    <td><span style="color:${pmNiveauColor(est.niveau)};">${pmNiveauIcon(est.niveau)}</span></td>
+    <td class="mono" style="color:${pmNiveauColor(est.niveau)}">${est.estimatedDate||'—'}</td>
+    <td class="right mono" style="color:${pmNiveauColor(est.niveau)}">${est.resteValeur!==null?Math.round(est.resteValeur)+' '+est.unite:'—'}</td>
+    <td class="right mono" style="color:var(--muted)">${est.joursRestants!==null?est.joursRestants:'—'}</td>
+    <td class="mono">${em[p.equipementId]?.code||'—'}</td>
+    <td>${esc(p.tache)}</td>
+    <td style="color:var(--muted);font-size:12px;">${est.natureDerniere!==null?`${est.natureDerniere} → ${est.natureProchaine} ${est.unite}`:'—'}</td>
+    <td><span class="badge" style="color:${pmSuiviColor(suivi)};border-color:${pmSuiviColor(suivi)};">${suivi}</span>${ot?` <span style="color:var(--muted);font-size:11px;">${ot.numero}</span>`:''}</td>
+    <td><button class="icon-btn" data-open-pm="${p.id}">${ICONS.edit}</button></td>
+  </tr>`;}).join('')}
+  </tbody></table></div>` : `
+  <div style="display:flex;flex-direction:column;gap:8px;">
+  ${sorted.map(({p,est,suivi})=>{
     return `<div class="plate p14 between wrapwrap legend-clickable" data-open-pm-row="${p.id}" style="gap:12px;">
-      <div class="row"><span class="led" style="background:${st.urgent?'var(--danger)':'var(--success)'}"></span>
-        <div><div style="font-size:13px;font-weight:500;">${esc(p.tache)}</div>
-        <div style="font-size:12px;color:var(--muted);">${em[p.equipementId]?.code||'—'} · <span class="badge">${p.type||'Date'}</span>${p.type==='Date'||!p.type?` · tous les ${p.frequenceJours} j`:` · tous les ${p.intervalle} ${p.type==='Heures'?'h':'km'}`}</div></div>
+      <div class="row"><span style="color:${pmNiveauColor(est.niveau)};font-size:16px;">${pmNiveauIcon(est.niveau)}</span>
+        <div><div class="row" style="flex-wrap:wrap;"><span style="font-size:13px;font-weight:500;">${esc(p.tache)}</span><span class="badge" style="color:${pmSuiviColor(suivi)};border-color:${pmSuiviColor(suivi)};">${suivi}</span></div>
+        <div style="font-size:12px;color:var(--muted);">${em[p.equipementId]?.code||'—'} · <span class="badge">${p.type||'Date'}</span>${p.type==='Date'||!p.type?` · tous les ${p.frequenceJours} j`:` · tous les ${p.intervalle} ${p.type==='Heures'?'h':'km'} (repère ${est.natureDerniere} → ${est.natureProchaine})`}${est.estimatedDate?` · échéance estimée : ${est.estimatedDate}${est.joursRestants!==null?' ('+est.joursRestants+'j)':''}`:''}</div></div>
       </div>
       <div class="row">
-        <span style="font-size:12px;color:${st.urgent?'var(--danger)':'var(--muted)'}">${st.label}</span>
+        <span style="font-size:12px;color:${pmNiveauColor(est.niveau)}">${est.label}</span>
         <button class="icon-btn" data-open-pm="${p.id}">${ICONS.edit}</button>
         <button class="icon-btn" data-del-pm="${p.id}">${ICONS.trash}</button>
       </div>
@@ -2492,7 +2695,7 @@ let pmIsNew = false;
 function blankPM(){
   return { id:null, equipementId: state.fleet[0]?.id||state.plantEquipment[0]?.id||'', tache:'', type:'Date',
     frequenceJours:90, derniere:'', prochaine:'', intervalle:250, derniereValeur:0,
-    gammeId:'', typeStrategie:state.typesStrategieMaintenance[0], objectif:state.objectifsMaintenance[0] };
+    gammeId:'', typeStrategie:state.typesStrategieMaintenance[0], objectif:state.objectifsMaintenance[0], otGenereId:null };
 }
 function openPMEditor(id){
   pmIsNew = (id==='new');
@@ -2522,7 +2725,19 @@ function viewPMEdit(){
     <label class="field"><span>Intervalle (${unite})</span><input type="number" id="pm-f-intervalle" value="${p.intervalle||(p.type==='Heures'?250:5000)}"/></label>
     <label class="field"><span>Dernier relevé au moment de l'entretien (${unite})</span><input type="number" id="pm-f-derniereValeur" value="${p.derniereValeur||0}"/></label>
     `}
-  </div>`;
+  </div>
+  ${!pmIsNew ? (()=>{ const em=equipMap(); const est=pmEstimation(p,em); const suivi=pmSuiviStatut(p); const ot=p.otGenereId?state.workOrders.find(w=>w.id===p.otGenereId):null;
+    return `<div class="plate p14" style="margin-top:16px;background:var(--panelR);">
+    <div class="row wrapwrap" style="gap:18px;align-items:flex-start;">
+      <div><div style="font-size:10px;text-transform:uppercase;color:var(--muted);">État</div><span style="font-size:16px;color:${pmNiveauColor(est.niveau)};">${pmNiveauIcon(est.niveau)}</span> <span style="font-size:12px;color:${pmNiveauColor(est.niveau)};">${est.niveau==='depasse'?'Dépassé':est.niveau==='proche'?'Proche':'À jour'}</span></div>
+      <div><div style="font-size:10px;text-transform:uppercase;color:var(--muted);">Statut de suivi</div><span class="badge" style="color:${pmSuiviColor(suivi)};border-color:${pmSuiviColor(suivi)};">${suivi}</span>${ot?` <span style="font-size:11px;color:var(--muted);">— ${ot.numero} (${ot.statut})</span>`:''}</div>
+      <div><div style="font-size:10px;text-transform:uppercase;color:var(--muted);">Échéance estimée</div><span style="font-size:13px;font-weight:600;color:${pmNiveauColor(est.niveau)};">${est.estimatedDate||'—'}</span>${est.joursRestants!==null?` <span style="font-size:11px;color:var(--muted);">(${est.joursRestants} j)</span>`:''}</div>
+      <div><div style="font-size:10px;text-transform:uppercase;color:var(--muted);">Reste à parcourir</div><span style="font-size:13px;">${est.label}</span></div>
+      ${est.natureDerniere!==null?`<div><div style="font-size:10px;text-transform:uppercase;color:var(--muted);">Repère (dernier → prochain)</div><span style="font-size:13px;">${est.natureDerniere} → ${est.natureProchaine} ${est.unite}</span></div>`:''}
+      ${est.avgLabel?`<div><div style="font-size:10px;text-transform:uppercase;color:var(--muted);">Usage moyen</div><span style="font-size:13px;">${est.avgLabel}</span></div>`:''}
+    </div>
+    <p style="font-size:11px;color:var(--muted);margin:10px 0 0;">Un ordre de travail est généré automatiquement 2 jours avant l'échéance estimée. Le compteur se réinitialise tout seul dès que cet OT est clôturé.</p>
+  </div>`; })() : ''}`;
   return fullFormPageHtml(pmIsNew?'Nouveau plan préventif':'Modifier le plan préventif', 'Planification par date ou par compteur (heures/km) — appuyée sur une gamme opératoire réutilisable', body);
 }
 function wirePMEdit(){
@@ -3027,7 +3242,7 @@ function viewPartsCritiques(list){
 function partForm(p){
   const ccOpts = state.costCenters.map(c=>`<option value="${c.id}" ${p.centreCoutId===c.id?'selected':''}>${esc(c.code)} — ${esc(c.nom)}</option>`).join('');
   return `
-  <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Oswald',sans-serif;margin-bottom:8px;">Catalogue</div>
+  <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Inter',sans-serif;margin-bottom:8px;">Catalogue</div>
   <div class="formgrid">
     <label class="field"><span>Code article</span><input data-f="ref" value="${esc(p.ref)}" placeholder="Ex: 6000611"/></label>
     <label class="field"><span>Code SAP/MM (optionnel)</span><input data-f="codeSAP" value="${esc(p.codeSAP)}"/></label>
@@ -3036,30 +3251,30 @@ function partForm(p){
     <label class="field"><span>Fournisseur principal</span><input data-f="fournisseurPrincipal" value="${esc(p.fournisseurPrincipal||p.fournisseur)}"/></label>
     <label class="field"><span>Unité de mesure</span><select data-f="unite">${state.unitesArticle.map(u=>`<option ${p.unite===u?'selected':''}>${u}</option>`).join('')}</select></label>
   </div>
-  <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Oswald',sans-serif;margin:16px 0 8px;">Stock actuel</div>
+  <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Inter',sans-serif;margin:16px 0 8px;">Stock actuel</div>
   <div class="formgrid">
     <label class="field"><span>Quantité en stock</span><input type="number" data-f="quantite" value="${p.quantite||0}"/></label>
     <label class="field"><span>Statut</span><select data-f="statutStock">${STATUTS_STOCK.map(s=>`<option ${p.statutStock===s?'selected':''}>${s}</option>`).join('')}</select></label>
     <label class="field span2"><span>Localisation (magasin, dépôt, atelier)</span><input data-f="localisation" value="${esc(p.localisation)}"/></label>
   </div>
-  <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Oswald',sans-serif;margin:16px 0 8px;">Seuils & alertes</div>
+  <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Inter',sans-serif;margin:16px 0 8px;">Seuils & alertes</div>
   <div class="formgrid">
     <label class="field"><span>Seuil minimum</span><input type="number" data-f="seuil" value="${p.seuil||0}"/></label>
     <label class="field"><span>Seuil maximum</span><input type="number" data-f="seuilMax" value="${p.seuilMax||0}"/></label>
     <label class="field span2"><span>Point de réapprovisionnement</span><input type="number" data-f="pointReappro" value="${p.pointReappro||0}"/></label>
   </div>
-  <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Oswald',sans-serif;margin:16px 0 8px;">Coûts & valorisation</div>
+  <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Inter',sans-serif;margin:16px 0 8px;">Coûts & valorisation</div>
   <div class="formgrid">
     <label class="field"><span>Coût unitaire (FCFA)</span><input type="number" data-f="coutUnitaire" value="${p.coutUnitaire||0}"/></label>
     <label class="field span2"><span>Centre de coût (imputation)</span><select data-f="centreCoutId"><option value="">—</option>${ccOpts}</select></label>
   </div>
-  <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Oswald',sans-serif;margin:16px 0 8px;">Fournisseurs & contrats</div>
+  <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Inter',sans-serif;margin:16px 0 8px;">Fournisseurs & contrats</div>
   <div class="formgrid">
     <label class="field"><span>Fournisseurs alternatifs</span><input data-f="fournisseursAlternatifs" value="${esc(p.fournisseursAlternatifs)}"/></label>
     <label class="field"><span>Délai livraison moyen (jours)</span><input type="number" data-f="delaiLivraison" value="${p.delaiLivraison||0}"/></label>
     <label class="field span2"><span>Conditions (incoterms, garanties)</span><input data-f="conditions" value="${esc(p.conditions)}"/></label>
   </div>
-  <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Oswald',sans-serif;margin:16px 0 8px;">Criticité</div>
+  <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Inter',sans-serif;margin:16px 0 8px;">Criticité</div>
   <div class="formgrid">
     <label class="field" style="flex-direction:row;align-items:center;gap:8px;"><input type="checkbox" data-f="critique" ${p.critique?'checked':''} style="width:auto;"/><span>Pièce critique / stratégique</span></label>
     <label class="field"><span>Niveau (A/B/C)</span><select data-f="niveauCriticite">${state.niveauxCriticite.map(n=>`<option ${p.niveauCriticite===n?'selected':''}>${n}</option>`).join('')}</select></label>
@@ -3307,6 +3522,89 @@ function viewNotifEdit(){
 }
 
 /* ============ COMPTEURS / MESURES ============ */
+function exportPMToExcel(){
+  if(state.pmPlans.length===0){ alert("Aucun plan préventif à exporter — crée d'abord un premier plan, ou pars directement d'un fichier vide avec les bonnes colonnes en cliquant Importer."); return; }
+  const em = equipMap();
+  const gm = Object.fromEntries(state.gammesOperatoires.map(g=>[g.id,g]));
+  const rows = state.pmPlans.map(p=>{
+    const eq = em[p.equipementId] || {};
+    return {
+      'Code équipement': eq.code||'',
+      'Gamme opératoire': p.gammeId && gm[p.gammeId] ? gm[p.gammeId].nom : '',
+      'Tâche': p.tache||'',
+      'Type de stratégie': p.typeStrategie||'',
+      'Objectif': p.objectif||'',
+      'Type de déclenchement': p.type||'Date',
+      'Compteur actuel Heures': eq.heures!==undefined?eq.heures:'',
+      'Compteur actuel Kilométrage': eq.km!==undefined?eq.km:'',
+      'Dernière réalisation (date)': p.derniere||'',
+      'Dernière valeur au dernier entretien': p.derniereValeur!==undefined?p.derniereValeur:'',
+      'Intervalle (h ou km)': p.intervalle!==undefined?p.intervalle:'',
+      'Fréquence (jours, si type=Date)': p.frequenceJours!==undefined?p.frequenceJours:''
+    };
+  });
+  const ws = XLSX.utils.json_to_sheet(rows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Préventif');
+  const dateStr = new Date().toISOString().slice(0,10);
+  XLSX.writeFile(wb, '2NA-MAINT-PROD_preventif_'+dateStr+'.xlsx');
+  toast('Export généré — '+rows.length+' plan(s) préventif(s)');
+}
+function importPMRows(rows){
+  let countEq=0, countPm=0, countGamme=0;
+  rows.forEach(r=>{
+    const code = String(findCol(r,['Code équipement','Code','Équipement'])||'').trim();
+    if(!code) return;
+    const eq = [...state.fleet, ...state.plantEquipment].find(e=>e.code.toLowerCase()===code.toLowerCase());
+    if(!eq) return;
+    const heuresVal = findCol(r,['Compteur actuel Heures','Heures actuel','Heures']);
+    const kmVal = findCol(r,['Compteur actuel Kilométrage','Kilométrage actuel','Kilométrage','KM']);
+    if(heuresVal!==undefined && heuresVal!==null && heuresVal!==''){ eq.heures = Number(heuresVal)||0; countEq++; }
+    if(kmVal!==undefined && kmVal!==null && kmVal!==''){ eq.km = Number(kmVal)||0; countEq++; }
+
+    const gammeNomCol = String(findCol(r,['Gamme opératoire','Gamme operatoire','Gamme'])||'').trim();
+    let tache = String(findCol(r,['Tâche','Tache'])||'').trim();
+    if(!tache) tache = gammeNomCol; // comme dans la fiche : choisir la gamme préremplit la tâche
+    if(!tache) return;
+
+    const type = String(findCol(r,['Type de déclenchement','Type'])||'Date').trim();
+    const typeStrategie = String(findCol(r,['Type de stratégie','Type de strategie'])||'').trim();
+    const objectif = String(findCol(r,['Objectif'])||'').trim();
+    const derniere = String(findCol(r,['Dernière réalisation (date)','Dernière réalisation','Derniere realisation'])||'').trim();
+    const derniereValeur = findCol(r,['Dernière valeur au dernier entretien','Dernière valeur','Derniere valeur']);
+    const intervalle = findCol(r,['Intervalle (h ou km)','Intervalle']);
+    const frequenceJours = findCol(r,['Fréquence (jours, si type=Date)','Fréquence (jours)','Frequence']);
+
+    let p = state.pmPlans.find(x=>x.equipementId===eq.id && (x.tache||'').toLowerCase().trim()===tache.toLowerCase());
+    if(!p){
+      p = blankPM();
+      p.id = uid(); p.equipementId = eq.id; p.tache = tache;
+      state.pmPlans.push(p);
+    }
+    p.type = PM_TYPES.includes(type) ? type : (p.type||'Date');
+    if(typeStrategie && state.typesStrategieMaintenance.includes(typeStrategie)) p.typeStrategie = typeStrategie;
+    if(objectif && state.objectifsMaintenance.includes(objectif)) p.objectif = objectif;
+    if(derniere) p.derniere = derniere;
+    if(derniereValeur!==undefined && derniereValeur!=='') p.derniereValeur = Number(derniereValeur)||0;
+    if(intervalle!==undefined && intervalle!=='') p.intervalle = Number(intervalle)||0;
+    if(frequenceJours!==undefined && frequenceJours!=='') p.frequenceJours = Number(frequenceJours)||90;
+    if(p.type==='Date' && p.derniere && p.frequenceJours){
+      const d = new Date(p.derniere); d.setDate(d.getDate()+Number(p.frequenceJours)); p.prochaine = d.toISOString().slice(0,10);
+    }
+    // Rattachement automatique de la gamme opératoire : d'abord par la colonne dédiée si renseignée,
+    // sinon en comparant directement le libellé de la tâche au nom d'une gamme existante.
+    const cible = (gammeNomCol || tache).toLowerCase().trim();
+    const gamme = state.gammesOperatoires.find(g=>(g.nom||'').toLowerCase().trim()===cible);
+    if(gamme && p.gammeId!==gamme.id){ p.gammeId = gamme.id; countGamme++; }
+    countPm++;
+  });
+  if(countPm===0 && countEq===0 && rows.length>0){
+    alert("Aucune ligne importée sur "+rows.length+" lues.\n\nColonnes détectées dans ton fichier :\n"+Object.keys(rows[0]).join(", ")+"\n\nVérifie qu'une colonne \"Code équipement\" est bien présente, avec des codes qui correspondent à des équipements existants, et qu'une \"Tâche\" ou une \"Gamme opératoire\" est renseignée sur chaque ligne.");
+    return;
+  }
+  checkAutoGeneratePM();
+  persist(); render(); toast(countPm+' plan(s) mis à jour'+(countGamme>0?' · '+countGamme+' gamme(s) opératoire(s) rattachée(s)':''));
+}
 function viewMeasures(){
   const em = equipMap();
   return `
@@ -3834,7 +4132,7 @@ function userAccessFieldsHtml(u, modules){
   modules = modules || (u?u.modules:{}) || {};
   const pages = (modules && modules.pages && typeof modules.pages==='object') ? modules.pages : null;
   return `
-  <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Oswald',sans-serif;margin:22px 0 8px;">Rôle & hiérarchie</div>
+  <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Inter',sans-serif;margin:22px 0 8px;">Rôle & hiérarchie</div>
   <div class="formgrid">
     <label class="field"><span>Fonction / poste</span><select data-f="fonction">${state.fonctions.map(f=>`<option ${(u&&u.fonction)===f?'selected':''}>${f}</option>`).join('')}</select></label>
     <label class="field"><span>Niveau hiérarchique (1-5)</span><select data-f="niveau_hierarchique">${NIVEAUX_HIER.map(n=>`<option value="${n}" ${Number(u&&u.niveau_hierarchique)===n?'selected':''}>${n}</option>`).join('')}</select></label>
@@ -3845,7 +4143,7 @@ function userAccessFieldsHtml(u, modules){
     <label class="field span2"><span>Niveau d'approbation</span><select data-f="niveau_approbation">${state.niveauxApprobation.map(n=>`<option ${(u&&u.niveau_approbation)===n?'selected':''}>${n}</option>`).join('')}</select></label>
   </div>
   <div class="between" style="margin:22px 0 8px;align-items:baseline;">
-    <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Oswald',sans-serif;">Pages accessibles</div>
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Inter',sans-serif;">Pages accessibles</div>
     <div class="row" style="gap:10px;">
       <span class="legend-clickable" id="uf-pages-check-all" style="font-size:11px;color:var(--steel);">Tout cocher</span>
       <span class="legend-clickable" id="uf-pages-check-none" style="font-size:11px;color:var(--danger);">Tout décocher</span>
@@ -3866,7 +4164,7 @@ function userAccessFieldsHtml(u, modules){
     </details>`;
     }).join('')}
   </div>
-  <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Oswald',sans-serif;margin:22px 0 8px;">Capacités de validation</div>
+  <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Inter',sans-serif;margin:22px 0 8px;">Capacités de validation</div>
   <p style="font-size:11px;color:var(--muted);margin:0 0 10px;">Coche précisément ce que ce compte a le droit de valider ou d'approuver — indépendamment de son rôle.</p>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;">
     ${CAPACITES.map(cap=>{
@@ -3898,7 +4196,7 @@ function viewUserCreate(){
     <p style="font-size:12px;color:var(--text);margin:0;">⚠️ Pour des raisons techniques liées à la sécurité des comptes, la création te déconnectera brièvement — tu devras te reconnecter avec ton propre identifiant juste après. C'est normal, ça n'arrive qu'une fois par création.</p>
   </div>
   <div class="plate p16">
-    <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Oswald',sans-serif;margin:0 0 8px;">Identifiants de connexion</div>
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Inter',sans-serif;margin:0 0 8px;">Identifiants de connexion</div>
     <div class="formgrid">
       <label class="field"><span>Identifiant</span><input data-f="identifiant" placeholder="Ex: USR005" style="text-transform:uppercase;"/></label>
       <label class="field"><span>Nom complet</span><input data-f="nomComplet" placeholder="Kouassi Jean"/></label>
@@ -3939,7 +4237,7 @@ function viewUserEdit(){
     </div>
   </div>
   <div class="plate p16">
-    <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Oswald',sans-serif;margin:0 0 8px;">Identité</div>
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-family:'Inter',sans-serif;margin:0 0 8px;">Identité</div>
     <div class="formgrid">
       <label class="field"><span>Identifiant</span><input value="${esc(u.identifiant)}" disabled style="opacity:.6"/></label>
       <label class="field"><span>Nom complet</span><input data-f="nom_complet" value="${esc(u.nom_complet)}"/></label>
@@ -3947,7 +4245,7 @@ function viewUserEdit(){
     ${userAccessFieldsHtml(u)}
   </div>
   <div class="plate p16" style="margin-top:16px;border-color:var(--danger);">
-    <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--danger);font-family:'Oswald',sans-serif;margin:0 0 8px;">Réinitialiser le mot de passe</div>
+    <div style="font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--danger);font-family:'Inter',sans-serif;margin:0 0 8px;">Réinitialiser le mot de passe</div>
     <p style="font-size:12px;color:var(--muted);margin:0 0 12px;">Réservé aux administrateurs — la personne devra utiliser ce nouveau mot de passe dès sa prochaine connexion.</p>
     <div class="formgrid">
       <label class="field"><span>Nouveau mot de passe</span><input type="password" id="user-edit-pass1" placeholder="Minimum 6 caractères"/></label>
@@ -4627,7 +4925,7 @@ function openConfirmationPanel(wId){
     <div class="modal" style="max-width:760px;">
       <div class="modal-head"><h3>Confirmation des opérations — ${w.numero||''}</h3><button class="icon-btn" id="wo-panel-close">${ICONS.close}</button></div>
       <div class="modal-body">
-        <p style="font-size:12px;color:var(--muted);margin:0 0 10px;">Le travail a été exécuté — vérifie les heures réellement effectuées par intervenant, ajuste-les si besoin, puis clique sur <strong>"Confirmer cette opération"</strong> pour chacune. L'OT reste en <strong>Confirmé partiel</strong> tant que toutes ne sont pas validées, puis passe en <strong>Terminé</strong> une fois complet.</p>
+        <p style="font-size:12px;color:var(--muted);margin:0 0 10px;">Le travail a été exécuté — vérifie les heures réellement effectuées par intervenant, ajuste-les si besoin, puis clique sur <strong>"Confirmer cette opération"</strong> pour chacune. L'OT reste en <strong>OT En cours</strong> tant que toutes ne sont pas validées, puis passe en <strong>OT Réalisé</strong> une fois complet.</p>
         <div class="between" style="background:var(--panel);border-radius:6px;padding:8px 12px;margin-bottom:14px;">
           <span style="font-size:12px;color:var(--muted);">Progression</span>
           <span style="font-size:13px;font-weight:700;color:${confirmedOps===totalOps&&totalOps>0?'var(--success)':'var(--accent)'};">${confirmedOps} / ${totalOps} opération(s) confirmée(s)</span>
@@ -4730,7 +5028,7 @@ function wireWorkflowPanels(w, mode){
       const confirmed = (w.operations||[]).filter(o=>o.confirme).length;
       if(total>0 && confirmed===total){
         closePanel();
-        toast('Toutes les opérations sont confirmées — OT marqué Terminé');
+        toast('Toutes les opérations sont confirmées — OT marqué Réalisé');
       } else {
         openConfirmationPanel(w.id);
       }
@@ -4763,29 +5061,23 @@ function openWorkflowPanel(w){
   const ops = w.operations||[];
   const totalOps = ops.length, confirmedOps = ops.filter(o=>o.confirme).length;
   const s = w.statut;
-  const order = ["OT Généré","OT Planifié","OT Autorisé","OT En cours","OT Réalisé","OT Validé Atelier","OT Clôturé"];
+  const order = ["OT Créé","OT En cours","OT Réalisé","OT Validé Atelier","OT Clôturé"];
   const idxActuel = order.indexOf(s);
   const passed = (key)=> idxActuel > order.indexOf(key) || s==='OT Clôturé';
   const isNow = (key)=> s===key;
   const stages = [
-    { key:'OT Généré', label:'1. Création de l\'avis (Technicien)', done: idxActuel>=0,
-      info: linkedNotif ? 'Avis '+(linkedNotif.numero||'')+' déclaré par le technicien' : 'OT créé directement (sans avis)' },
-    { key:'ValidationAvis', label:'2. Validation de l\'avis (Chef d\'atelier)', done: idxActuel>=0,
-      info: linkedNotif && linkedNotif.statut==='Validée' ? 'Avis validé, OT généré' : (w.categorieEquipement!==undefined && !linkedNotif ? 'Étape sautée (OT créé directement)' : '—') },
-    { key:'OT Planifié', label:'3. Planification (Planificateur)', done: passed('OT Planifié')||isNow('OT Planifié'),
-      info: isNow('OT Généré') ? 'En attente de planification (ressources, gammes, équipe)' : (w.technicien?'Responsable affecté : '+w.technicien:'Aucun responsable affecté'),
-      pending: isNow('OT Généré') },
-    { key:'OT Autorisé', label:'4. Autorisation (Directeur d\'exploitation)', done: passed('OT Autorisé')||isNow('OT Autorisé'),
-      info: w.autorisePar ? 'Autorisé par '+w.autorisePar+' le '+(w.dateAutorisation||'') : (isNow('OT Planifié')?'En attente d\'autorisation':'—'),
-      pending: isNow('OT Planifié') },
-    { key:'OT En cours', label:'5. Exécution des travaux (Technicien)', done: passed('OT Réalisé')||['OT Réalisé','OT Validé Atelier','OT Clôturé'].includes(s),
-      info: totalOps===0 ? (isNow('OT en reprise')?'Reprise demandée : '+(w.motifReprise||''):'Aucune opération saisie') : `${confirmedOps} / ${totalOps} opération(s) confirmée(s)`,
-      pending: isNow('OT Autorisé') || isNow('OT En cours') || isNow('OT en reprise') },
-    { key:'OT Validé Atelier', label:'6. Contrôle qualité (Chef d\'atelier)', done: isNow('OT Validé Atelier')||isNow('OT Clôturé'),
+    { key:'OT Créé', label:'1. Création (Technicien / Planificateur)', done: idxActuel>=0,
+      info: linkedNotif ? 'Avis '+(linkedNotif.numero||'')+' déclaré par le technicien' : 'OT créé directement' },
+    { key:'OT En cours', label:'2. Lancement (Planificateur ou Chef d\'atelier) puis exécution (Technicien)', done: passed('OT En cours')||['OT En cours','OT Réalisé','OT Validé Atelier','OT Clôturé'].includes(s),
+      info: isNow('OT Créé') ? 'En attente de lancement' : (totalOps===0 ? (isNow('OT en reprise')?'Reprise demandée : '+(w.motifReprise||''):'Aucune opération saisie') : `${confirmedOps} / ${totalOps} tâche(s) cochée(s)`),
+      pending: isNow('OT Créé') || isNow('OT En cours') || isNow('OT en reprise') },
+    { key:'OT Réalisé', label:'3. Travaux validés (Technicien)', done: ['OT Réalisé','OT Validé Atelier','OT Clôturé'].includes(s),
+      info: isNow('OT Réalisé')||isNow('OT Validé Atelier')||isNow('OT Clôturé') ? 'Toutes les tâches ont été cochées' : '—' },
+    { key:'OT Validé Atelier', label:'4. Contrôle qualité (Chef d\'atelier)', done: isNow('OT Validé Atelier')||isNow('OT Clôturé'),
       info: w.controleQualitePar ? 'Validé par '+w.controleQualitePar+' le '+(w.dateControleQualite||'') : (isNow('OT Réalisé')?'En attente de contrôle qualité':'—'),
       pending: isNow('OT Réalisé') },
-    { key:'OT Clôturé', label:'7. Clôture technique (Planificateur)', done: isNow('OT Clôturé'),
-      info: isNow('OT Clôturé') ? ('Clôturé le '+(w.dateFin||'—')+(w.clotureFinanciere?' · clôture financière validée par '+(w.clotureFinancierePar||''):' · clôture financière en attente')) : (isNow('OT Validé Atelier') ? 'Prêt pour clôture technique' : '—'),
+    { key:'OT Clôturé', label:'5. Clôture technique (Planificateur) puis financière (Directeur d\'exploitation)', done: isNow('OT Clôturé'),
+      info: isNow('OT Clôturé') ? ('Clôturé le '+(w.dateFin||'—')+(w.clotureFinanciere?' · clôture financière validée par '+(w.clotureFinancierePar||''):' · clôture financière en attente (Directeur d\'exploitation)')) : (isNow('OT Validé Atelier') ? 'Prêt pour clôture technique' : '—'),
       pending: isNow('OT Validé Atelier') },
   ];
   const root = document.getElementById('modal-root');
@@ -5213,7 +5505,7 @@ function confirmModal(message, onConfirm, opts={}){
     <div class="modal" style="max-width:440px;">
       <div class="modal-head"><h3>${opts.title||'Confirmation'}</h3><button class="icon-btn" id="confirm-x">${ICONS.close}</button></div>
       <div class="modal-body">
-        <p style="font-size:13px;color:var(--text);line-height:1.5;margin:0 0 18px;">${esc(message)}</p>
+        <p style="font-size:13px;color:var(--text);line-height:1.5;margin:0 0 18px;white-space:pre-line;">${esc(message)}</p>
         <div class="modal-actions" style="justify-content:flex-end;">
           <button class="btn btn-ghost" id="confirm-cancel">Annuler</button>
           <button class="btn ${opts.danger?'btn-ghost':'btn-accent'}" id="confirm-ok" ${opts.danger?'style="color:var(--danger);border-color:var(--danger);"':''}>${opts.okLabel||'Confirmer'}</button>
@@ -5222,9 +5514,10 @@ function confirmModal(message, onConfirm, opts={}){
     </div>
   </div>`;
   const close = ()=>{ document.getElementById('modal-root').innerHTML=''; };
-  document.getElementById('confirm-overlay').addEventListener('click', e=>{ if(e.target.id==='confirm-overlay') close(); });
-  document.getElementById('confirm-x').addEventListener('click', close);
-  document.getElementById('confirm-cancel').addEventListener('click', close);
+  const cancel = ()=>{ close(); if(opts.onCancel) opts.onCancel(); };
+  document.getElementById('confirm-overlay').addEventListener('click', e=>{ if(e.target.id==='confirm-overlay') cancel(); });
+  document.getElementById('confirm-x').addEventListener('click', cancel);
+  document.getElementById('confirm-cancel').addEventListener('click', cancel);
   document.getElementById('confirm-ok').addEventListener('click', ()=>{ close(); onConfirm(); });
 }
 
@@ -5345,6 +5638,7 @@ function attachHandlers(){
       w.statut = 'OT Clôturé';
       if(!w.dateFin) w.dateFin = new Date().toISOString().slice(0,10);
       const eq = equipMap()[w.equipementId]; if(eq) eq.statut='Opérationnel';
+      pmOnClosure(w);
       logAudit('OT '+w.numero+' → OT Clôturé');
       persist(); render(); toast(w.numero+' clôturé');
     });
@@ -5358,6 +5652,18 @@ function attachHandlers(){
     e.stopPropagation();
     openPMEditor(b.dataset.openPm);
   }));
+  const pmExportBtn = document.getElementById('pm-export-btn');
+  if(pmExportBtn) pmExportBtn.addEventListener('click', exportPMToExcel);
+  const pmImportBtn = document.getElementById('pm-import-btn');
+  const pmImportFile = document.getElementById('pm-import-file');
+  if(pmImportBtn && pmImportFile){
+    pmImportBtn.addEventListener('click', ()=>pmImportFile.click());
+    pmImportFile.addEventListener('change', (e)=>{ if(e.target.files[0]) readExcelFile(e.target.files[0], importPMRows); });
+  }
+  const pmModeListe = document.getElementById('pm-mode-liste');
+  if(pmModeListe) pmModeListe.addEventListener('click', ()=>{ pmViewMode='liste'; render(); });
+  const pmModeSuivi = document.getElementById('pm-mode-suivi');
+  if(pmModeSuivi) pmModeSuivi.addEventListener('click', ()=>{ pmViewMode='suivi'; render(); });
   document.querySelectorAll('[data-open-pm-row]').forEach(row=>row.addEventListener('click',()=>{
     openPMEditor(row.dataset.openPmRow);
   }));
@@ -5859,7 +6165,7 @@ function attachHandlers(){
       id:uid(), numero:'OT-'+String(state.woCounter).padStart(4,'0'), equipementId:n.equipementId,
       categorieEquipement: inFleet ? 'Flotte' : inPlant ? 'Usine' : '', type:'Panne / Correctif',
       typeTravail: n.type==='Panne'?'Intervention':'Inspection', poste:state.postes[0], titre:n.description.slice(0,60),
-      description:n.description, priorite:n.priorite, statut:'OT Généré',
+      description:n.description, priorite:n.priorite, statut:'OT Créé',
       dateCreation:new Date().toISOString().slice(0,10), dateDebut:new Date().toISOString().slice(0,10), dateFin:''
     };
     state.workOrders.push(wo);
@@ -6651,7 +6957,7 @@ async function init(){
       typesStrategieMaintenance: ["Préventif systématique","Conditionnel","Prédictif","Correctif"],
       objectifsMaintenance: ["Disponibilité","Sécurité","Réduction des coûts","Environnement"],
       gammesOperatoires: [],
-      cuves: [], pompes: [], ravitaillements: [], typesCarburant: ["Diesel","Essence","Pétrole"],
+      cuves: [], pompes: [], ravitaillements: [], pmHistorique: [], typesCarburant: ["Diesel","Essence","Pétrole"],
       rolesApplicatifs: [
         {id:'admin', label:'Administrateur'}, {id:'planificateur', label:'Planificateur maintenance'},
         {id:'technicien', label:'Technicien terrain'}, {id:'rh', label:'Responsable RH'},
@@ -6707,6 +7013,7 @@ async function init(){
     data.objectifsMaintenance = (data.objectifsMaintenance && data.objectifsMaintenance.length) ? data.objectifsMaintenance : ["Disponibilité","Sécurité","Réduction des coûts","Environnement"];
     data.gammesOperatoires = data.gammesOperatoires || [];
     data.cuves = data.cuves || [];
+    data.pmHistorique = data.pmHistorique || [];
     data.pompes = data.pompes || [];
     data.ravitaillements = data.ravitaillements || [];
     data.typesCarburant = (data.typesCarburant && data.typesCarburant.length) ? data.typesCarburant : ["Diesel","Essence","Pétrole"];
@@ -6756,18 +7063,22 @@ async function init(){
         w.categorieEquipement = inFleet ? 'Flotte' : inPlant ? 'Usine' : '';
       }
       if(w.type==='Correctif') w.type = 'Panne / Correctif';
-      // migration des anciens statuts vers le nouveau circuit à 7 étapes (Technicien → Chef Atelier → Planificateur → Directeur → Clôture)
-      if(w.statut==='Ouvert' || w.statut==='Créé') w.statut = 'OT Planifié';
-      if(w.statut==='Confirmé') w.statut = 'OT Autorisé';
+      // migration des anciens statuts vers le circuit simplifié (Technicien → Lancement Planificateur/Chef Atelier → Exécution → Contrôle qualité → Clôture)
+      if(w.statut==='Ouvert' || w.statut==='Créé') w.statut = 'OT Créé';
+      if(w.statut==='Confirmé') w.statut = 'OT En cours';
       if(w.statut==='Confirmé partiel') w.statut = 'OT En cours';
       if(w.statut==='En cours') w.statut = 'OT En cours';
       if(w.statut==='Terminé') w.statut = 'OT Réalisé';
       if(w.statut==='Clôturé') w.statut = 'OT Clôturé';
+      // Migration des statuts intermédiaires supprimés lors de la simplification du circuit
+      if(w.statut==='OT Planifié') w.statut = 'OT Créé';
+      if(w.statut==='OT Autorisé') w.statut = 'OT En cours';
     });
   }
   state = data;
   normalizeState();
   applyTheme(state.theme);
+  checkAutoGeneratePM();
   render();
   persist();
   startPolling();
